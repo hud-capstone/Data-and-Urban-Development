@@ -14,6 +14,20 @@ This repository holds all resources used in the attainment of the goals establis
 ## Audience
 The audience for this project is the layperson.
 
+## Hypotheses
+
+### Exploration
+$H_0$: The total final mortgage amount for a market is independent of loan type
+$H_a$: The total final mortgage amount for a market is dependent of loan type
+
+### Time Series Regression
+$H_0$: Mortgage lending and market development are independent of each other
+$H_a$: Mortgage lending and market development are dependent of each other
+
+### Classification
+$H_0$: The mean final mortgage amount among all market are indistinguishable 
+$H_a$: The mean final mortgage amount among all market are distinguishable
+
 ## Deliverables
 
 ### Need to Haves:
@@ -22,7 +36,8 @@ The audience for this project is the layperson.
 3. Presentation summarizing our findings
 
 ### Nice to Haves:
-1. Web application
+1. Map of markets
+2. Web application
 
 ## Cloning
 All files necessary for cloning and reproducing the work found in the final_project.ipynb file are contained within this repository.
