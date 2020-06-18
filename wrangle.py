@@ -43,7 +43,6 @@ def changing_data_types(df):
     return df
 
 
-
 def wrangle_hud():
     """
     This function does the followingL:
@@ -72,6 +71,12 @@ def wrangle_hud():
 
     # Change name of city with just zipcode
     df["project_city"] = df["project_city"].str.replace("55435", "Minneapolis")
+
+    # strip whitespace from project_city string
+    df["project_city"] = df.project_city.str.strip()
+
+    # transform project_city string to Title Case
+    df["project_city"] = df.project_city.str.title()
 
     df.to_csv("clean_data.csv")
 
