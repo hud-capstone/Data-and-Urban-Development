@@ -7,7 +7,7 @@ def acquire_fha_data():
     url = 'https://www.hud.gov/sites/dfiles/Housing/documents/Initi_Endores_Firm%20Comm_DB_FY06_FY20_Q2.xlsx'
     sheet_name = "Firm Cmtmts, Iss'd and Reiss'd"
 
-    df  = pd.read_excel(url, sheet_name=sheet_name, header=6)
+    df = pd.read_excel(url, sheet_name=sheet_name, header=6)
     
     return df
 
@@ -56,11 +56,10 @@ def wrangle_hud():
     7. Writes the transformed data to clean_data.csv
     """
 
-    if os.path.exists('raw_data.csv') == False:
+    if os.path.exists('Initi_Endores_Firm Comm_DB_FY06_FY20_Q2.xlsx') == False:
         df = acquire_fha_data()
-
     else:
-        df = pd.read_csv("raw_data.csv")
+        df = pd.read_excel("Initi_Endores_Firm Comm_DB_FY06_FY20_Q2.xlsx", sheet_name="Firm Cmtmts, Iss'd and Reiss'd", header=6)
 
     df = snake_case_column_names(df)
 
