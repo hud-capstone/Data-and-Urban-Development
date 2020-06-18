@@ -52,7 +52,9 @@ def wrangle_hud():
     4. Changes the data types to datetime for the columns where there is only a fiscal year value 
     5. Removes the outlier whose final mortgage amount is $1
     6. Renames the project city of 55435 to Minneapolis
-    7. Writes the transformed data to clean_data.csv
+    7. Strips whitespace from project_city string
+    8. Transform project_city string to title case
+    9. Writes the transformed data to clean_data.csv
     """
 
     if os.path.exists('Initi_Endores_Firm Comm_DB_FY06_FY20_Q2.xlsx') == False:
@@ -75,7 +77,7 @@ def wrangle_hud():
     # strip whitespace from project_city string
     df["project_city"] = df.project_city.str.strip()
 
-    # transform project_city string to Title Case
+    # transform project_city string to title case
     df["project_city"] = df.project_city.str.title()
 
     df.to_csv("clean_data.csv")
