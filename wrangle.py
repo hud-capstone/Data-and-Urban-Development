@@ -41,7 +41,7 @@ def changing_data_types(df):
     df.fha_number = df.fha_number.astype('object')
     return df
 
-def wrangle():
+def wrangle_hud():
     df = acquire_fha_data()
 
     df = snake_case_column_names(df)
