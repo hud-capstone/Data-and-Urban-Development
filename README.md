@@ -77,19 +77,31 @@ The audience for this project is the layperson.
 ## Hypotheses
 
 ### Exploration
-$H_0$: The total final mortgage amount for a market is independent of loan type
 
-$H_a$: The total final mortgage amount for a market is dependent of loan type
+#### Mortgage Amount and HUD Program
+$H_0$ : The total final mortgage amount for a market is independent of HUD program (Basic FHA, Risk Share or Other)
+
+$H_a$ : The total final mortgage amount for a market is dependent on HUD program
+
+#### Mortgage Amount and Statue
+$H_0$ : The mean final mortgage is the same across the current statuses
+
+$H_a$ : The mean final mortgage is different depending on the current statuses
+
+#### Mortgage Amount and Facility Type
+$H_0$ : The mean final mortgage amount is the same across all facility types
+
+$H_a$ : The mean final mortgage is different depending on the facility type
 
 ### Time Series Regression
-$H_0$: Mortgage lending and market development are independent of each other
+$H_0$ : Mortgage lending and market development are independent of each other
 
-$H_a$: Mortgage lending and market development are dependent of each other
+$H_a$ : Mortgage lending and market development are dependent of each other
 
 ### Classification
-$H_0$: The mean final mortgage amount among all market are indistinguishable 
+$H_0$ : The mean final mortgage amount among all market are indistinguishable 
 
-$H_a$: The mean final mortgage amount among all market are distinguishable
+$H_a$ : The mean final mortgage amount among all market are distinguishable
 
 ## Deliverables
 
