@@ -1,4 +1,5 @@
 import pandas as pd
+import os
 
 def acquire_fha_data():
     """takes fha data from hud website (url, sheet_name) turns it into pandas df"""
@@ -40,6 +41,10 @@ def changing_data_types(df):
 
     df.fha_number = df.fha_number.astype('object')
     return df
+
+def check_for_csv_file(file_name):
+    if os.path.exists(file_name) == False:
+        pull_csv_file()
 
 def wrangle_hud():
     df = acquire_fha_data()
