@@ -81,7 +81,12 @@ The audience for this project is the layperson.
 #### Mortgage Amount and Activity Description
 $H_0$: The mean final mortgage amount is the same across all activity descriptions
 
-$H_a$: The mean final mortgage amount is the same across all activity descriptions
+$H_a$: The mean final mortgage amount is different depending on the activity description
+
+#### Mortgage Amount and Facility Type
+$H_0$ : The mean final mortgage amount is the same across all facility types
+
+$H_a$ : The mean final mortgage is different depending on the facility type
 
 #### Mortgage Amount and HUD Program
 $H_0$ : The total final mortgage amount for a market is independent of HUD program (Basic FHA, Risk Share or Other)
@@ -92,11 +97,6 @@ $H_a$ : The total final mortgage amount for a market is dependent on HUD program
 $H_0$ : The mean final mortgage is the same across the current statuses
 
 $H_a$ : The mean final mortgage is different depending on the current statuses
-
-#### Mortgage Amount and Facility Type
-$H_0$ : The mean final mortgage amount is the same across all facility types
-
-$H_a$ : The mean final mortgage is different depending on the facility type
 
 ### Time Series Regression
 $H_0$ : Mortgage lending and market development are independent of each other
