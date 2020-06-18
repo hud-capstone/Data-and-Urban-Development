@@ -42,18 +42,27 @@ def changing_data_types(df):
     df.fha_number = df.fha_number.astype('object')
     return df
 
-def check_for_csv_file(file_name):
-    if os.path.exists(file_name) == False:
-        pull_csv_file()
+
 
 def wrangle_hud():
-    df = acquire_fha_data()
+
+    if os.path.exists('clean_data.csv') == False:
+        df = acquire_fha_data()
+
+    else:
+        df = pd.read_csv("clean_data.csv")
 
     df = snake_case_column_names(df)
 
     df = change_to_bool(df)
-    
+
     df = changing_data_types(df)
+
+    # Remove outlier
+    df = df[df["final_mortgage_amount"] > 10000]
+
+    # Change name of city with just zipcode
+    df["project_city"] = df["project_city"].str.replace("55435", "Minneapolis")
 
     df.to_csv("clean_data.csv")
 
