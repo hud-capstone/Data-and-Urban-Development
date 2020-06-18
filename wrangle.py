@@ -47,7 +47,7 @@ def changing_data_types(df):
 def wrangle_hud():
     """
     This function does the followingL:
-    1. Conditionally acquires the FHA data if the raw_data.csv does not exist
+    1. Conditionally acquires the FHA data if the Initi_Endores_Firm Comm_DB_FY06_FY20_Q2.xlsx does not exist
     2. Reformats the column names to snake case
     3. Changes the appropriate columns to contain boolean values
     4. Changes the data types to datetime for the columns where there is only a fiscal year value 
