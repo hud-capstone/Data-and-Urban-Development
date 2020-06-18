@@ -19,3 +19,37 @@ def snake_case_column_names(df):
     
     df.columns = new_column_names
     return df
+
+def change_to_bool(df):
+    """takes in columns with only 2 options and turns them into booleans"""
+    for col in df.columns:
+        if (df[col][0] == 0) & (df[col].unique()[1] == 'Y'):
+            df[col] = df[col] == "Y"
+    return df
+
+
+def changing_data_types(df):
+    """change fha number to an object
+    change year only columns to datetime"""
+
+    df.fiscal_year_of_firm_commitment = pd.to_datetime(df.fiscal_year_of_firm_commitment, format="%Y")
+    df.fiscal_year_of_firm_commitment = df.fiscal_year_of_firm_commitment.apply(lambda x: x.year)
+
+    df.fiscal_year_of_firm_commitment_activity = pd.to_datetime(df.fiscal_year_of_firm_commitment_activity, format="%Y")
+    df.fiscal_year_of_firm_commitment_activity = df.fiscal_year_of_firm_commitment_activity.apply(lambda x: x.year)
+
+    df.fha_number = df.fha_number.astype('object')
+    return df
+
+def wrangle():
+    df = acquire_fha_data()
+
+    df = snake_case_column_names(df)
+
+    df = change_to_bool(df)
+    
+    df = changing_data_types(df)
+
+    df.to_csv("clean_data.csv")
+
+    return df
