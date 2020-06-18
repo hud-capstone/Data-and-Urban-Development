@@ -45,6 +45,16 @@ def changing_data_types(df):
 
 
 def wrangle_hud():
+    """
+    This function does the followingL:
+    1. Conditionally acquires the FHA data if the raw_data.csv does not exist
+    2. Reformats the column names to snake case
+    3. Changes the appropriate columns to contain boolean values
+    4. Changes the data types to datetime for the columns where there is only a fiscal year value 
+    5. Removes the outlier whose final mortgage amount is $1
+    6. Renames the project city of 55435 to Minneapolis
+    7. Writes the transformed data to clean_data.csv
+    """
 
     if os.path.exists('raw_data.csv') == False:
         df = acquire_fha_data()
