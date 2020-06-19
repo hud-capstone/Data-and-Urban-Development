@@ -24,10 +24,10 @@ def get_model_df():
     # calling wrangle_hud
     df = wr.wrangle_hud()
 
-    # grouping by project_city, project_state, fiscal_year_of_firm_commitment_activity, and activity_description
+    # grouping by project_city, project_state, and fiscal_year_of_firm_commitment
     # aggregating final_mortgage_amount
     # sorting by sum and count in descending order
-    model_df = df.groupby(["project_city", "project_state", "fiscal_year_of_firm_commitment_activity", "activity_description"])[
+    model_df = df.groupby(["project_city", "project_state", "fiscal_year_of_firm_commitment_activity"])[
         "final_mortgage_amount"
     ].agg(["count", "sum", "mean", "median"]).sort_values(
         by=["sum", "count"], ascending=False
