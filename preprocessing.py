@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from sklearn.model_selection import cross_val_score, train_test_split, GridSearchCV
 
 from datetime import datetime
 
@@ -57,3 +58,64 @@ def get_model_df():
     )
 
     return model_df
+
+
+# ------------------- #
+# Feature Engineering #
+# ------------------- #
+
+def calculate_mortgage_var(df):
+    df["mean_var"] = df.sort_values(["city", "state", "year"])["average_mortgage_amount"].pct_change() * 100
+    return df
+
+def calculate_mortgage_cnt_var(df):
+    df["quantity_var"] = df.sort_values(["city", "state", "year"])["quantity_of_mortgages"].pct_change() * 100
+    return df
+
+def calculate_evolution_index(df):
+    # EI = (1 + Company Growth %) / (1 + Market Growth %) X 100
+    
+    df["market_growth"] = df.groupby("year").mean_var.transform("mean")
+
+    df["ei"] = (1+ df.mean_var) / (1+ df.market_growth) * 100
+
+    return df
+
+#__main prep__
+
+def add_new_features(df):
+    df = calculate_mortgage_var(df)
+    df = calculate_mortgage_cnt_var(df)
+    df = calculate_evolution_index(df)
+
+    return df
+
+# ------------------- #
+#  Prep for Modeling  #
+# ------------------- #
+
+def train_test_data(df):
+    train, test = train_test_split(df, train_size=.75, random_state=123)
+    return train, test
+
+#__Main Pre-modeling function__#
+def prep_data_for_modeling(df, features_for_modeling):
+
+    # To avoid Nan's, I have removed all data from 2006 (because all the var's would be nan)
+    df_model = df[df.year > 2006]
+
+    # Create an observation id to reduce the chance of mistake's
+    df_model["observation_id"] = df_model.city + "_" + df_model.state + "_"  + df_model.year.astype(str)
+
+    # select that features that we want to model, and use our observation id as the row id
+    data = df_model[features_for_modeling].set_index("observation_id")
+
+    train, test = train_test_data(data)
+
+    X_train = train.drop(columns="label")
+    y_train = train["label"]
+    X_test = test.drop(columns="label")
+    y_test = test["label"]
+
+    return X_train, y_train, X_test, y_test
+
