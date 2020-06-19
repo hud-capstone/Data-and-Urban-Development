@@ -18,6 +18,7 @@ def get_model_df():
     3. Aggregates the grouped data using various metrics
     4. Sorts the data by sum and count of final_mortgage_amount
     5. Renames the features inplace
+    6. Creates a label feature for classification
     """
 
     # calling wrangle_hud
@@ -44,6 +45,15 @@ def get_model_df():
             "median": "median_mortgage_amount",
         },
         inplace=True,
+    )
+
+    # create label feature
+    model_df["label"] = np.where(
+        ((model_df.city == "Houston") & (model_df.state == "TX") & (model_df.year == 2009))
+        | ((model_df.city == "Seattle") & (model_df.state == "WA") & (model_df.year == 2010))
+        | ((model_df.city == "Dallas") & (model_df.state == "TX")  & (model_df.year == 2012)),
+        True,
+        False,
     )
 
     return model_df
