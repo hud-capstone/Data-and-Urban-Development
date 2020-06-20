@@ -74,7 +74,7 @@ def calculate_mortgage_cnt_var(df):
 
 def calculate_evolution_index(df):
     # EI = (1 + Company Growth %) / (1 + Market Growth %) X 100
-    
+    df = df.sort_values(["city", "state", "year"])
     df["market_growth"] = df.groupby("year").mean_var.transform("mean")
 
     df["ei"] = (1+ df.mean_var) / (1+ df.market_growth) * 100
@@ -111,6 +111,8 @@ def prep_data_for_modeling(df, features_for_modeling):
     data = df_model[features_for_modeling].set_index("observation_id")
 
     train, test = train_test_data(data)
+    train = train.sort_values("observation_id")
+    test = test.sort_values("observation_id")
 
     X_train = train.drop(columns="label")
     y_train = train["label"]
