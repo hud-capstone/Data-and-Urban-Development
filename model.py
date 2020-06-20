@@ -66,8 +66,8 @@ def run_random_forest(X_train, y_train):
     '''
     
     params = {
-    'max_depth': range(1, 20),
-    "min_samples_leaf": range(1,20)
+    'max_depth': range(1, 15),
+    "min_samples_leaf": range(1,15)
     }
 
     rf = RandomForestClassifier(random_state = 123)
