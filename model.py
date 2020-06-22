@@ -42,7 +42,7 @@ def run_decision_tree(X_train, y_train):
     dtree = DecisionTreeClassifier()
 
     # cv=4 means 4-fold cross-validation, i.e. k = 4
-    grid = GridSearchCV(dtree, params, cv=10)
+    grid = GridSearchCV(dtree, params, cv=10, scoring= "recall")
     grid.fit(X_train, y_train)
 
     model = grid.best_estimator_
@@ -66,14 +66,14 @@ def run_random_forest(X_train, y_train):
     '''
     
     params = {
-    'max_depth': range(1, 15),
-    "min_samples_leaf": range(1,15)
+    'max_depth': range(1, 10),
+    "min_samples_leaf": range(1,10)
     }
 
     rf = RandomForestClassifier(random_state = 123)
 
     # cv=4 means 4-fold cross-validation, i.e. k = 4
-    grid = GridSearchCV(rf, params, cv=10)
+    grid = GridSearchCV(rf, params, cv=5, scoring= "recall")
     grid.fit(X_train, y_train)
 
     model = grid.best_estimator_
@@ -104,7 +104,7 @@ def run_knn(X_train, y_train):
     }
 
     # cv=4 means 4-fold cross-validation, i.e. k = 4
-    grid = GridSearchCV(knn, params, cv=10)
+    grid = GridSearchCV(knn, params, cv=10, scoring= "recall")
     grid.fit(X_train, y_train)
 
     model = grid.best_estimator_
