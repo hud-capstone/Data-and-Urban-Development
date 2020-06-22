@@ -73,9 +73,18 @@ Upon seeing the data for the first time, there was a good amount of industry jar
 
 **'HOME VI' Designation** - Title VI is funding for federally recognized tribes and Tribally Designated Housing Entities meant for refinancing and new home construction, as well as all the costs associated with community development.
 
+## How Do Cities Get Block Grants?
+
+As the largest federal block grant, the 'Home Investment Partnership Program' ('Home Program') is meant for the creation / rehabilitation of affordable housing for low-income individuals.  It is a formulaic grant, meaning the amount of federal money going to the states and cities is based on statistical criteria and the amount of funds to be distributed (source: grants.gov).  There are several of these types of grants, and each has their own unique formula, but the money *must* be allocated and administered per the requirements of the law that gave birth to the grant.
+
+The 'HOME Program' is not the only source of funding for new construction / rehabilitation; it is public money designed to work in conjunction with private money with the aim to bridge large-scale funds to small-scale needs.  Bob goes to City Council and says, 'I know you've got a hunk of cash for aid in housing.  Please use it to help me build / renovate this area down the street from me.'    
+
+Here's how it works: a bill becomes a law, and the grant money goes to the States.  Participating jurisdictions (cities) put together - and approve - a 'Consolidated Plan' that outlines what they'll do with that money and how they'll allocate it to help improve affordable housing.  They present it to the State, and the State decides how much money they'll get based on the presented Consolidation Plan. 
 
 ## Summary Background on Stakeholder, TestFit.io
 
-Based in Dallas, TX and originally named 'BuildingForge,' TestFit.io was founded by Clifton Harness (CEO) and Ryan Griege(CTO) in October of 2015.  They are a software company specifically meant to help architects craft buildings more quickly through their generative design tools that translate over to AutoCAD, a poplular tool used in all phases of the construction process.  Their enhanced visualizations help architects test parametric designs while streamlining the feasibility study process for commercial projects, both substantial roadblocks in any community investment project.
+Based in Dallas, TX and originally named 'BuildingForge,' TestFit.io was founded by Clifton Harness (CEO) and Ryan Griege (CTO) in October of 2015.  They are a software company specifically meant to help architects craft buildings more quickly through their generative design tools that translate easily over to AutoCAD, a poplular tool used in all phases of the construction process.  Their enhanced visualizations help architects test parametric designs while streamlining the feasibility study process for commercial projects, both substantial roadblocks in any community investment project.
 
 In January 2020, TestFit.io received $2,000,000 from Parkway Venture Capital, which they have earmarked for both personnel and market growth.  They are currently looking to expand their offerings into retail floorplan analysis ('adjacency studies') and hospital construction.  
+
+## About the Modeling Used for This Project
