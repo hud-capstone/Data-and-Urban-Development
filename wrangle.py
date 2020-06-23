@@ -65,17 +65,17 @@ def changing_data_types(df):
     df.fha_number = df.fha_number.astype('object')
     return df
 
-def set_date_column(df): 
-    """function drops all 2020 data and changes feature column"""
-    # take this out of the function when I have an internet connection:
-    df.date_of_firm_commitment_activity = pd.to_datetime(df.date_of_firm_commitment_activity)
-    #drop 2020 mortgage data
-    df = df[df.date_of_firm_commitment_activity < '2020-01-01']
-    pd.to_datetime(df.date_of_firm_commitment_activity)
-    # change date_of_firm_commitment_activity to Y only
-    df.date_of_firm_commitment_activity = df.date_of_firm_commitment_activity.apply(lambda x: x.year)
+# def set_date_column(df): 
+#     """function drops all 2020 data and changes feature column"""
+#     # take this out of the function when I have an internet connection:
+#     df.date_of_firm_commitment_activity = pd.to_datetime(df.date_of_firm_commitment_activity)
+#     #drop 2020 mortgage data
+#     df = df[df.date_of_firm_commitment_activity < '2020-01-01']
+#     pd.to_datetime(df.date_of_firm_commitment_activity)
+#     # change date_of_firm_commitment_activity to Y only
+#     df.date_of_firm_commitment_activity = df.date_of_firm_commitment_activity.apply(lambda x: x.year)
     
-    return df
+#     return df
 
 def make_activity_construction_bool(df):
     """makes a boolean column indicating whether the mortgage was for a refinance"""

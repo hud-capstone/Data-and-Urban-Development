@@ -201,3 +201,33 @@ def prep_data_for_modeling(df, features_for_modeling, label_feature):
     y_test = test[label_feature]
 
     return X_train, y_train, X_test, y_test
+
+
+#__Feature creation for labeling __#
+def labeling_future_data(df):
+    """this function takes in a data frame and returns a boolean column that identifies
+    if a city_state_year is a market that should be entered"""
+    
+    df["label_quantity_of_mortgages_pop_2y"] = (df.sort_values(["year"])
+                                  .groupby(["city", "state"])[["quantity_of_mortgages_pop"]]
+                                  .pct_change(2)
+                                  .shift(-2))
+    
+    df["label_total_mortgage_volume_pop_2y"] = (df.sort_values(["year"])
+                                  .groupby(["city", "state"])[["total_mortgage_volume_pop"]]
+                                  .pct_change(2)
+                                  .shift(-2))
+    
+    Q3 = df.label_quantity_of_mortgages_pop_2y.quantile(.75)
+    Q1 = df.label_quantity_of_mortgages_pop_2y.quantile(.25)
+    upper_fence_quantity = Q3 + ((Q3-Q1)*1.5)
+    upper_fence_quantity
+    
+    Q3 = df.label_total_mortgage_volume_pop_2y.quantile(.75)
+    Q1 = df.label_total_mortgage_volume_pop_2y.quantile(.25)
+    upper_fence_volume = Q3 + ((Q3-Q1)*1.5)
+    upper_fence_volume
+    
+    df['should_enter'] = (df.label_total_mortgage_volume_pop_2y > upper_fence_volume) | (df.label_quantity_of_mortgages_pop_2y > upper_fence_quantity)
+    
+    return df
