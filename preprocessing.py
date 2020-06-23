@@ -80,6 +80,8 @@ def get_model_df():
     # reassigning the model_df variable to the combined DataFrame created in the cell above
     model_df = combined_df
 
+    # filling 
+
     # create label feature
     model_df["label"] = np.where(
         ((model_df.city == "Houston") & (model_df.state == "TX") & (model_df.year == 2009))
@@ -98,7 +100,7 @@ def get_model_df():
 
 def calculate_city_state_vol_delta(df):
     """
-    This function creates the specific market growth (city + state observation) rate by doing the following:
+    This function creates the specific market growth (city + state observation) rate using volume by doing the following:
     1. Creates the city_state_growth_pop feature out of the total_mortgage_volume_pop
     2. Creates the city_state_growth_nc feature out of the total_mortgage_volume_nc
     3. Returns the df with the new features
@@ -114,9 +116,9 @@ def calculate_city_state_vol_delta(df):
 
 def calculate_city_state_qty_delta(df):
     """
-    This function does the following:
-    1. Creates the quantity_var_pop feature out of the quantity_of_mortgages_pop
-    2. Creates the quantity_var_nc feature out of the quantity_of_mortgages_nc
+    This function creates the specific market growth (city + state observation) rate using quantity by doing the following:
+    1. Creates the city_state_qty_delta_pop feature out of the quantity_of_mortgages_pop
+    2. Creates the city_state_qty_delta_nc feature out of the quantity_of_mortgages_nc
     3. Returns the df with the new features
     """
 
@@ -136,14 +138,23 @@ def calculate_evolution_index(df):
     # EI = (1 + Company Growth %) / (1 + Market Growth %) X 100
     df = df.sort_values(["city", "state", "year"])
 
-    # calc market_volume for the year
+    # calc market_volume_pop for the year
     df["market_volume"] = df.groupby("year").total_mortgage_volume_pop.transform("sum")
 
-    # calculate market growth rate from prior year
+    # calculate market growth rate for the population from prior year
     df["market_volume_delta"] = np.where(df.year > 2006, df["market_volume"].pct_change(), np.nan)
 
-    # calc evolution index
+    # calc market_volume_nc for the year
+    # df["market_volume_nc"] = df.groupby("year").total_mortgage_volume_nc.transform("sum")
+
+    # calculate market growth rate from prior year
+    # df["market_volume_delta_nc"] = np.where(df.year > 2006, df["market_volume_nc"].pct_change(), np.nan)
+
+    # calc evolution index for population
     df["ei"] = (1 + df.city_state_vol_delta_pop) / (1 + df.market_volume_delta)
+
+    # calc evolution index for new construction
+    # df["ei_nc"] = (1 + df.city_state_vol_delta_nc) / (1 + df.market_volume_delta_nc)
 
     return df
 
@@ -165,7 +176,7 @@ def train_test_data(df):
     return train, test
 
 #__Main Pre-modeling function__#
-def prep_data_for_modeling(df, features_for_modeling):
+def prep_data_for_modeling(df, features_for_modeling, label_feature):
 
     # To avoid Nan's, I have removed all data from 2006 (because all the var's would be nan)
     df_model = df[df.year > 2006]
@@ -174,16 +185,19 @@ def prep_data_for_modeling(df, features_for_modeling):
     df_model["observation_id"] = df_model.city + "_" + df_model.state + "_"  + df_model.year.astype(str)
 
     # select that features that we want to model, and use our observation id as the row id
+    features_for_modeling += ["observation_id"]
+
+    features_for_modeling += [label_feature]
+
     data = df_model[features_for_modeling].set_index("observation_id")
 
     train, test = train_test_data(data)
     train = train.sort_values("observation_id")
     test = test.sort_values("observation_id")
 
-    X_train = train.drop(columns="label")
-    y_train = train["label"]
-    X_test = test.drop(columns="label")
-    y_test = test["label"]
+    X_train = train.drop(columns=label_feature)
+    y_train = train[label_feature]
+    X_test = test.drop(columns=label_feature)
+    y_test = test[label_feature]
 
     return X_train, y_train, X_test, y_test
-
