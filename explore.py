@@ -171,3 +171,46 @@ def calculate_p_values_for_vol_loans(df):
     plt.ylabel("Mortgages Approved, in Dollars")
     plt.xlabel("City")
     plt.legend()
+
+def plot_mortgage_vol_by_year(df):
+    """
+    This function groups the 
+    """
+
+    # group by city, state, fiscal year, and activity description
+    # calculate count of mortgages and volume
+    city_state_all_activity = pd.DataFrame(
+        df.groupby(
+            [
+                "project_city",
+                "project_state",
+                "fiscal_year_of_firm_commitment_activity",
+                "activity_description",
+            ]
+        )["final_mortgage_amount"]
+        .agg(["count", "sum"])
+        .reset_index()
+        .sort_values(by=["count", "sum"], ascending=False)
+    )
+
+    fig, ax = plt.subplots()
+
+    # create lineplot
+    sns.lineplot(
+        data=city_state_all_activity,
+        x="fiscal_year_of_firm_commitment_activity",
+        y="sum",
+        hue="activity_description",
+        ci=False,
+        ax=ax,
+    )
+
+    # set title for legend
+    legend = ax.legend()
+    legend.texts[0].set_text("Activity Description")
+
+    # format labels
+    plt.xlabel("Fiscal Year")
+    plt.ylabel("Total Mortgage Volume")
+    plt.title("Total Mortgage Volume by Fiscal Year")
+    plt.show()
