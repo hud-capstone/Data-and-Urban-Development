@@ -11,6 +11,29 @@ def acquire_fha_data():
     
     return df
 
+def drop_multiple_fha_numbers(df):
+    """drops multiple fha_numbers by dropping issued data when a reissue is available in firm commitment activity"""
+    
+    #create df of rows unique fha_numbers
+    unique_fha_list = df.fha_number.value_counts()[df.fha_number.value_counts() == 1]
+    def in_unique_list(x):
+        return x in unique_fha_list
+    df_unique = df[df.fha_number.apply(in_unique_list)]
+    
+    #create df for rows with repeat fha_numbers
+    repeat_fha_numbers = df.fha_number.value_counts()[df.fha_number.value_counts() != 1].index
+    def in_repeat_list(x):
+        return x in repeat_fha_numbers
+    df_repeat = df[df.fha_number.apply(in_repeat_list)]
+    
+    #filter out "issued" mortgages, if they have been "reissued"
+    df_repeat = df_repeat[df_repeat.firm_commitment_activity == 'Firm Reissued']
+    
+    #combine repeat and unique dataframes to show all uniques
+    df = pd.concat([df_unique ,df_repeat])
+    
+    return df
+
 def snake_case_column_names(df):
     """takes in a data frame, lower cases column name, replaces space with underscore and strips commas"""
     new_column_names = []
@@ -42,6 +65,25 @@ def changing_data_types(df):
     df.fha_number = df.fha_number.astype('object')
     return df
 
+def set_date_column(df): 
+    """function drops all 2020 data and changes feature column"""
+    # take this out of the function when I have an internet connection:
+    df.date_of_firm_commitment_activity = pd.to_datetime(df.date_of_firm_commitment_activity)
+    #drop 2020 mortgage data
+    df = df[df.date_of_firm_commitment_activity < '2020-01-01']
+    pd.to_datetime(df.date_of_firm_commitment_activity)
+    # change date_of_firm_commitment_activity to Y only
+    df.date_of_firm_commitment_activity = df.date_of_firm_commitment_activity.apply(lambda x: x.year)
+    
+    return df
+
+def make_activity_construction_bool(df):
+    """makes a boolean column indicating whether the mortgage was for a refinance"""
+    
+    df['is_refinance'] = df.activity_description == 'Refinance'
+    df['is_new_construction'] = df.activity_description == 'New Construction'
+    return df
+
 
 def wrangle_hud():
     """
@@ -67,6 +109,10 @@ def wrangle_hud():
     df = change_to_bool(df)
 
     df = changing_data_types(df)
+
+    df = drop_multiple_fha_numbers(df)
+
+    df = make_activity_construction_bool(df)
 
     # Remove outlier
     df = df[df["final_mortgage_amount"] > 10000]
