@@ -24,7 +24,7 @@ from sklearn.naive_bayes import MultinomialNB
 #        Modeling        #
 # ---------------------- #
 
-def run_decision_tree(X_train, y_train):
+def run_decision_tree_cv(X_train, y_train):
     '''
     Function to run a decision tree model. The function creates the model, then uses 
     cross-validation grid search to figure out what the best parameters are. Returns a grid (object
@@ -42,7 +42,7 @@ def run_decision_tree(X_train, y_train):
     dtree = DecisionTreeClassifier()
 
     # cv=4 means 4-fold cross-validation, i.e. k = 4
-    grid = GridSearchCV(dtree, params, cv=10, scoring= "recall")
+    grid = GridSearchCV(dtree, params, cv=3, scoring= "recall")
     grid.fit(X_train, y_train)
 
     model = grid.best_estimator_
@@ -57,7 +57,7 @@ def run_decision_tree(X_train, y_train):
 
     return grid, df_result, model
 
-def run_random_forest(X_train, y_train):
+def run_random_forest_cv(X_train, y_train):
     '''
     Function to run a random forest model. The function creates the model, then uses 
     cross-validation grid search to figure out what the best parameters are. Returns a grid (object
@@ -73,7 +73,7 @@ def run_random_forest(X_train, y_train):
     rf = RandomForestClassifier(random_state = 123)
 
     # cv=4 means 4-fold cross-validation, i.e. k = 4
-    grid = GridSearchCV(rf, params, cv=5, scoring= "recall")
+    grid = GridSearchCV(rf, params, cv=3, scoring= "recall")
     grid.fit(X_train, y_train)
 
     model = grid.best_estimator_
@@ -88,7 +88,7 @@ def run_random_forest(X_train, y_train):
 
     return grid, df_result, model
 
-def run_knn(X_train, y_train):
+def run_knn_cv(X_train, y_train):
     '''
     Function to run a knn model. The function creates the model, then uses 
     cross-validation grid search to figure out what the best parameters are. Returns a grid (object
@@ -104,7 +104,7 @@ def run_knn(X_train, y_train):
     }
 
     # cv=4 means 4-fold cross-validation, i.e. k = 4
-    grid = GridSearchCV(knn, params, cv=10, scoring= "recall")
+    grid = GridSearchCV(knn, params, cv=3, scoring= "recall")
     grid.fit(X_train, y_train)
 
     model = grid.best_estimator_
@@ -151,3 +151,58 @@ def accuracy_report(model, y_pred, y_train):
     matrix = pd.DataFrame(confusion_matrix(y_train, y_pred), index = labels, columns = labels)
 
     return accuracy_score, matrix, report
+
+
+############################################################################################################
+
+                                        # Modeling by hand #
+
+############################################################################################################
+
+# ---------------------- #
+#        Modeling        #
+# ---------------------- #
+
+# Decision Tree
+
+def run_clf(X_train, y_train, max_depth):
+    '''
+    Function used to create and fit decision tree models. It requires a max_depth parameter. Returns model and predictions.
+    '''
+    clf = DecisionTreeClassifier(criterion='entropy', max_depth=max_depth, random_state=123)
+    clf.fit(X_train, y_train)
+    y_pred = clf.predict(X_train)
+    return clf, y_pred
+
+
+# KNN
+
+def run_knn(X_train, y_train, n_neighbors):
+    '''
+    Function used to create and fit KNN model. Requires to specify n_neighbors. Returns model and predictions.
+    '''
+    knn = KNeighborsClassifier(n_neighbors=n_neighbors, weights='uniform')
+    knn.fit(X_train, y_train)
+    y_pred = knn.predict(X_train)
+    return knn, y_pred
+
+# Random_forest
+
+def run_rf(X_train, y_train, leaf, max_depth):
+    ''' 
+    Function used to create and fit random forest models. Requires to specif leaf and max_depth. Returns model and predictions.
+    '''
+    rf = RandomForestClassifier(random_state= 123, min_samples_leaf = leaf, max_depth = max_depth).fit(X_train, y_train)
+    y_pred = rf.predict(X_train)
+    return rf, y_pred
+
+# Logistic Regression
+
+def run_lg(X_train, y_train):
+    '''
+    Function used to create and fit logistic regression models. Returns model and predictions.
+    '''
+    logit = LogisticRegression().fit(X_train, y_train)
+    y_pred = logit.predict(X_train)
+    return logit, y_pred
+
