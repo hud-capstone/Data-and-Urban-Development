@@ -174,7 +174,7 @@ def calculate_p_values_for_vol_loans(df):
 
 def plot_mortgage_vol_by_year(df):
     """
-    This function groups the 
+    This function groups the final mortgage amount by city, state, fiscal year, and activity description and plots a line graph of the total mortgage volume.
     """
 
     # group by city, state, fiscal year, and activity description
@@ -203,6 +203,7 @@ def plot_mortgage_vol_by_year(df):
         hue="activity_description",
         ci=False,
         ax=ax,
+        # palette=palette,
     )
 
     # set title for legend
@@ -214,3 +215,14 @@ def plot_mortgage_vol_by_year(df):
     plt.ylabel("Total Mortgage Volume")
     plt.title("Total Mortgage Volume by Fiscal Year")
     plt.show()
+
+def get_stat_test_results(stat, pvalue, alpha):
+    "This function returns the results of a hypothesis test given the statistic, pvalue, and alpha for a test."
+
+    print(f"statistic = {stat:.5f}")
+    print(f"  p-value = {pvalue:.5f}")
+    print()
+    if pvalue < alpha:
+        print("Reject null hypothesis")
+    else:
+        print("Fail to reject null hypothesis")
