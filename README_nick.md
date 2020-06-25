@@ -34,7 +34,6 @@ Our chosen platform for code devlepment is Jupyter Notebook, an open-source web 
 
 To work with the following information, you must first clone this repository.  In doing so, you are grabbing a full copy of our work and putting it on your computer for analysis.  Instructions for doing so can be found [here](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository).
 
-
 # Planning
 
 Once teams were assigned, we immediately began working toward defining our MVP, our Minimum Viable Product.  A quick review of the customer demands and it was decided the MVP should be a high-performing classification model to determine when and where the client should act on deploying their sales assets.
@@ -113,7 +112,7 @@ With the assistance of the work done in the 'wrangle.py' file, 'preprocessing.py
 
 Also important within this file are functions to facilitate the implementation of year-over-year change in total mortgage amounts within the cities found in our dataset.
 
-Lastly - and perhaps most importantly - this preprocessing file contains funcitons that split our data into two sets: training and test.  You want to see how well your model performs using the training data, and then test it against new, unknown testing data.  Splitting data like this allows you to make changes to the training set while keeping the test set (the stuff the model will face in the 'real world') untouched.  Our data is split 75% train, 25% test, which lies well within suggested practice parameters.
+Lastly - and perhaps most importantly - this preprocessing file contains functions that split our data into two sets: training and test.  You want to see how well your model performs using the training data, and then test it against new, unknown testing data.  Splitting data like this allows you to make changes to the training set while keeping the test set (the stuff the model will face in the 'real world') untouched.  Our data is split 75% train, 25% test, which lies well within suggested practice parameters.
 
 **Modeling**
 
@@ -129,7 +128,6 @@ In January 2020, TestFit.io received $2,000,000 from Parkway Venture Capital, wh
 
 ## About the Modeling Used for This Project
 
-
 Before modeling, we had to come up with a way to label our data so that our models could reflect which markets were outperforming the rest.  In other words, for the results of our models to be understandable to stakeholders or anyone recreating our data, we had to figure out which outputs were good and which were not.  For the purposes of our MVP, it was decided to proceed using the 'Evolution Index' prevalent in pharmaceutical product analysis.
 
 Suppose you've been selling an allergy medicine called 'Allergone.'  There is a load of competition you're facing - 'Allegra,' 'Claritin,' and 'Zyrtec' just to name a few.  Over time, you see your sales skyrocket - you can barely keep up with the demand.  That's great becauase you're moving product and staying busy, but how well are you actually doing against those other brands?  While *your* sales have increased, have they increased at the rate of the rest of the market?  Are you  *evolving* at the same rate as 'Allegra,' 'Claritin,' or 'Zyrtec?'  If not, you may be doomed to fail, despite your increase in sales.
@@ -137,3 +135,33 @@ Suppose you've been selling an allergy medicine called 'Allergone.'  There is a 
 The Evolution Index (EI) helps you get an objective view of your performance against that of your competitors in your market.  It is scored using the following formula:  EI = (100 + Product Growth %) / (100 + Market Growth %) X 100.   Any score above 100 means your hot dog sales are growing faster than the rest of the market, and any score under 100 means the other vendors are outpacing you.  
 
 We used EI in the same manner, only with markets themselves instead of individual products.  
+
+## Summary of Findings
+
+Once we had parsed through the original dataset and tailored it for exploration, we were left with a dataset that really did not have enough data for our models to find / understand patterns.  We implemented a practice common to statisticians and demographers: intentional overfitting.  
+
+To 'overfit' your data means that you over-train your model on the training data, resulting in poor model performance against test (real-world') data.  In other words, your model becomes specific to that part of the data and doesn't know what to do when new data comes in.  
+
+Since our model is trying to predict a certain category ('enter market' or 'don't enter market'), three scores measuring the accuracy of our predictions are precision, recall, and f1.  But to understand either, we first have to understand the concept to True and False Positives and Negatives.
+
+In Data Science, there is a way we measure classification model performances called a 'confusion matrix.'  It's basically a 2 X 2 square  
+
+## Recommendations
+
+A recommendation of 25 cities showing fantastic recall scores is great, but no business (rather, few businesses) can deploy all their resources to 25 markets at once.  Therefore, a more effective result from our modeling would be a Top 3 of cities chosen out of those 25 that limits the decision-making process when business development is one's main concern.
+
+### Economies of Scale
+
+From a business perspective, investing in a city - creating the boom - must be looked at in terms of wheter or not those investments (time, money, employees, etc.) increase the business's economy of scale.  Without getting too mired down in the jargon of microeconomics to understand this concept, take a look at baking a loaf of bread.
+
+To make one loaf of bread costs you $5.00 - a pound of flour, a pound of sugar, yeast, and salt.  This is your fixed cost; you can't make break without them so you'll always need them.  However, that's enough ingredients to make more than one loaf; with them, you can make five loaves of bread.  Now, the fixed cost of making each loaf of bread is only $1.00.  You have just increased your economy of scale five-fold.  
+
+In economic terms, your production becomes more efficient - you make more loaves - and your fixed cost of $5.00 is now spread out over five loaves instead of one.   
+
+### How Cities Grow
+
+Understanding how cities grow helped guide our research into making these recommendations, and it's important that we're clear as to the metrics included in this analysis.  
+
+First off, a boom does no good if it busts, so infrastructure is key to the growth capacity and sustainability of the markets under consideration.  Without the roads, highways, and airports necessary to enable transportation within those cities, it's unlikely the people moving to those markets will stay, given they'll find the cost of living in a city will outweigh any benefits they may experience.  And not just transportation, but access to medical and entertainment facilites as well - you can order all the stuff you want on Amazon, but they don't deliver a cardiologist to your doorstep if you ever need a heart procedure.
+
+Secondly, it's all about return on investment (ROI) for businesses.  Dense populations are ideal because they allow more products to be sold in a confined space - a truck load of products going to, say, Atlanta, is less of a fixed cost than half a truckload of products going to Ames, Iowa.  Not only is transportation per unit less, but unit sales are better in dense areas, and inventories turn over at a much greater rate.   
