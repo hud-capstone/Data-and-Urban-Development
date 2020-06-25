@@ -341,5 +341,5 @@ def visualize_clusters(df, centriods):
     plt.title("What groupings exist when we cluster by the average number of units per building and evolution index")
     plt.xlabel("Average Number of Units per Building")
     plt.ylabel("Evolution Index")
-    plt.axhline(y=0, color='r', linestyle='-')
+    plt.axhline(y=-0.5, color='r', linestyle='-')
     plt.show()
