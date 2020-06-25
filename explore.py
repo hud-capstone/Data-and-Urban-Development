@@ -226,3 +226,61 @@ def get_stat_test_results(stat, pvalue, alpha):
         print("Reject null hypothesis")
     else:
         print("Fail to reject null hypothesis")
+
+def visualize_clusters(df, centriods):
+    for cluster, subset in df.groupby("cluster"):
+        plt.scatter(
+            subset.avg_units_per_bldg, subset.market_share, label="cluster" + str(cluster), alpha=0.6
+        )
+
+    centriods.plot.scatter(
+        x="avg_units_per_bldg",
+        y="market_share",
+        c="black",
+        marker="x",
+        s=1000,
+        ax=plt.gca(),
+        label="centriod",
+    )
+
+    houston_2009 = df[(df.city == "Houston") & (df.state == "TX") & (df.year == 2009)]
+
+    houston_2009.plot.scatter(
+        x="avg_units_per_bldg",
+        y="market_share",
+        c="firebrick",
+        marker="x",
+        s=500,
+        ax=plt.gca(),
+        label="Houston 2009",
+    )
+
+    seattle_2010 = df[(df.city == "Seattle") & (df.state == "WA") & (df.year == 2010)]
+
+    seattle_2010.plot.scatter(
+        x="avg_units_per_bldg",
+        y="market_share",
+        c="purple",
+        marker="x",
+        s=500,
+        ax=plt.gca(),
+        label="Seattle 2010",
+    )
+
+    dallas_2012 = df[(df.city == "Dallas") & (df.state == "TX")  & (df.year == 2012)]
+
+    dallas_2012.plot.scatter(
+        x="avg_units_per_bldg",
+        y="market_share",
+        c="magenta",
+        marker="x",
+        s=500,
+        ax=plt.gca(),
+        label="Dallas 2012",
+    )
+
+    plt.legend()
+    plt.title("What groupings exist when we cluster by the average number of units per building and market share?")
+    plt.xlabel("Average Number of Units per Building")
+    plt.ylabel("Market Share")
+    plt.show()

@@ -1,7 +1,8 @@
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import cross_val_score, train_test_split, GridSearchCV
-from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import MinMaxScaler, StandardScaler, PowerTransformer
+from sklearn.cluster import KMeans
 
 from datetime import datetime
 
@@ -169,6 +170,42 @@ def calculate_evolution_index(df):
     df["ei"] = (1 + df.city_state_high_density_value_delta_pct) / (1 + df.market_volume_delta_pct)
 
     return df
+
+#__clustering__#
+
+def create_clusters(df):
+    """
+    This function creates clusters using average units per building & market share which calculated within.
+    """
+
+    # create market_share feature
+    df['market_share'] = (df.total_high_density_value / df.market_volume)
+
+    # scale the features
+
+    # create object
+    scaler = PowerTransformer(method="box-cox")
+    # fit object
+    scaler.fit(df[["avg_units_per_bldg", "market_share"]])
+    # transform using object
+    df[["avg_units_per_bldg", "market_share"]] = scaler.transform(df[["avg_units_per_bldg", "market_share"]])
+
+    # define features for KMeans modeling
+    X = df[["avg_units_per_bldg", "market_share"]]
+
+    # cluster using k of 5
+
+    # create object
+    kmeans = KMeans(n_clusters=5, random_state=123)
+    # fit object
+    kmeans.fit(X)
+    # predict using object
+    df["cluster"] = kmeans.predict(X)
+
+    # create centriods object
+    centriods = pd.DataFrame(kmeans.cluster_centers_, columns=X.columns)
+
+    return df, kmeans, centriods, scaler
 
 #__main prep__#
 
