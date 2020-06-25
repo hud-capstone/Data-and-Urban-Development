@@ -285,13 +285,13 @@ def get_stat_test_results(stat, pvalue, alpha):
 #     plt.ylabel("Market Share")
 #     plt.show()
 
-def visualize_clusters(df, centriods):
+def visualize_clusters(df, centroids):
     for cluster, subset in df.groupby("cluster"):
         plt.scatter(
             subset.avg_units_per_bldg, subset.ei, label="cluster" + str(cluster), alpha=0.6
         )
 
-    centriods.plot.scatter(
+    centroids.plot.scatter(
         x="avg_units_per_bldg",
         y="ei",
         c="black",

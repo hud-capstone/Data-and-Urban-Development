@@ -241,9 +241,9 @@ def create_clusters(df):
     df["cluster"] = kmeans.predict(X)
 
     # create centriods object
-    centriods = pd.DataFrame(kmeans.cluster_centers_, columns=X.columns)
+    centroids = pd.DataFrame(kmeans.cluster_centers_, columns=X.columns)
 
-    return df, kmeans, centriods, scaler
+    return df, kmeans, centroids, scaler
 
 #__main prep__#
 
