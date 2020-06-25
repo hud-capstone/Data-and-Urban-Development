@@ -17,7 +17,8 @@ from sklearn.tree import export_graphviz
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.naive_bayes import MultinomialNB
-
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 
 # ---------------------- #
@@ -174,6 +175,28 @@ def run_clf(X_train, y_train, max_depth):
     y_pred = clf.predict(X_train)
     return clf, y_pred
 
+def run_clf_loop(train_scaled, validate_scaled, y_validate, y_train, max_range):
+    for i in range(1, max_range):
+        clf, y_pred = run_clf(train_scaled, y_train, i)
+        score = clf.score(train_scaled, y_train)
+        validate_score = clf.score(validate_scaled, y_validate)
+        _, _, report = accuracy_report(clf, y_pred, y_train)
+        recall_score = report["True"].recall
+        print(f"Max_depth = {i}, accuracy_score = {score:.2f}. validate_score = {validate_score:.2f}, recall = {recall_score:.2f}")
+
+def clf_feature_importances(clf, train_scaled):
+    coef = clf.feature_importances_
+    # We want to check that the coef array has the same number of items as there are features in our X_train dataframe.
+    assert(len(coef) == train_scaled.shape[1])
+    coef = clf.feature_importances_
+    columns = train_scaled.columns
+    df = pd.DataFrame({"feature": columns,
+                    "feature_importance": coef,
+                    })
+
+    df = df.sort_values(by="feature_importance", ascending=False)
+    sns.barplot(data=df, x="feature_importance", y="feature", palette="Blues_d")
+    plt.title("What are the most influencial features?")
 
 # KNN
 
@@ -186,6 +209,16 @@ def run_knn(X_train, y_train, n_neighbors):
     y_pred = knn.predict(X_train)
     return knn, y_pred
 
+def run_knn_loop(train_scaled, validate_scaled, y_validate, y_train, max_range):
+    for i in range(1, max_range):
+        knn, y_pred = run_knn(train_scaled, y_train, i)
+        score = knn.score(train_scaled, y_train)
+        validate_score = knn.score(validate_scaled, y_validate)
+        _, _, report = accuracy_report(knn, y_pred, y_train)
+        recall_score = report["True"].recall
+        print(f"Max_depth = {i}, accuracy_score = {score:.2f}. validate_score = {validate_score:.2f}, recall = {recall_score:.2f}")
+
+
 # Random_forest
 
 def run_rf(X_train, y_train, leaf, max_depth):
@@ -195,6 +228,26 @@ def run_rf(X_train, y_train, leaf, max_depth):
     rf = RandomForestClassifier(random_state= 123, min_samples_leaf = leaf, max_depth = max_depth).fit(X_train, y_train)
     y_pred = rf.predict(X_train)
     return rf, y_pred
+
+def run_rf_loop(train_scaled, validate_scaled, y_validate, y_train, max_range):
+    for i in range(1, max_range):
+        rf, y_pred = run_rf(train_scaled, y_train, 1, i)
+        score = rf.score(train_scaled, y_train)
+        validate_score = rf.score(validate_scaled, y_validate)
+        _, _, report = accuracy_report(rf, y_pred, y_train)
+        recall_score = report["True"].recall
+        print(f"Max_depth = {i}, accuracy_score = {score:.2f}. validate_score = {validate_score:.2f}, recall = {recall_score:.2f}")
+
+def rf_feature_importance(rf, train_scaled):
+    coef = rf.feature_importances_
+    columns = train_scaled.columns
+    df = pd.DataFrame({"feature": columns,
+                    "feature_importance": coef,
+                    })
+
+    df = df.sort_values(by="feature_importance", ascending=False)
+    sns.barplot(data=df, x="feature_importance", y="feature", palette="Blues_d")
+    plt.title("What are the most influencial features?")
 
 # Logistic Regression
 
