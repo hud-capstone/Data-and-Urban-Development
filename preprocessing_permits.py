@@ -204,10 +204,10 @@ def calculate_evolution_index(df):
 #     # predict using object
 #     df["cluster"] = kmeans.predict(X)
 
-#     # create centriods object
-#     centriods = pd.DataFrame(kmeans.cluster_centers_, columns=X.columns)
+#     # create centroids object
+#     centroids = pd.DataFrame(kmeans.cluster_centers_, columns=X.columns)
 
-#     return df, kmeans, centriods, scaler
+#     return df, kmeans, centroids, scaler
 
 # average units per building & evolution index
 
