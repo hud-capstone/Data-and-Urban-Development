@@ -173,30 +173,68 @@ def calculate_evolution_index(df):
 
 #__clustering__#
 
+# average units per building & market share
+
+# def create_clusters(df):
+#     """
+#     This function creates clusters using average units per building & market share which calculated within.
+#     """
+
+#     # create market_share feature
+#     df['market_share'] = (df.total_high_density_value / df.market_volume)
+
+#     # scale the features
+
+#     # create object
+#     scaler = PowerTransformer(method="box-cox")
+#     # fit object
+#     scaler.fit(df[["avg_units_per_bldg", "market_share"]])
+#     # transform using object
+#     df[["avg_units_per_bldg", "market_share"]] = scaler.transform(df[["avg_units_per_bldg", "market_share"]])
+
+#     # define features for KMeans modeling
+#     X = df[["avg_units_per_bldg", "market_share"]]
+
+#     # cluster using k of 5
+
+#     # create object
+#     kmeans = KMeans(n_clusters=5, random_state=123)
+#     # fit object
+#     kmeans.fit(X)
+#     # predict using object
+#     df["cluster"] = kmeans.predict(X)
+
+#     # create centriods object
+#     centriods = pd.DataFrame(kmeans.cluster_centers_, columns=X.columns)
+
+#     return df, kmeans, centriods, scaler
+
+# average units per building & evolution index
+
 def create_clusters(df):
     """
-    This function creates clusters using average units per building & market share which calculated within.
+    This function creates clusters using average units per building & evolution index which calculated within.
     """
 
-    # create market_share feature
-    df['market_share'] = (df.total_high_density_value / df.market_volume)
+    # mask df to exclude 1997 (no prior year growth measures)
+    df = df[df.year > 1997]
 
     # scale the features
 
     # create object
-    scaler = PowerTransformer(method="box-cox")
+    scaler = PowerTransformer()
     # fit object
-    scaler.fit(df[["avg_units_per_bldg", "market_share"]])
+    scaler.fit(df[["avg_units_per_bldg", "ei"]])
     # transform using object
-    df[["avg_units_per_bldg", "market_share"]] = scaler.transform(df[["avg_units_per_bldg", "market_share"]])
+    df[["avg_units_per_bldg", "ei"]] = scaler.transform(df[["avg_units_per_bldg", "ei"]])
 
     # define features for KMeans modeling
-    X = df[["avg_units_per_bldg", "market_share"]]
+    X = df[["avg_units_per_bldg", "ei"]]
 
-    # cluster using k of 5
+    # cluster using k of 6
 
     # create object
-    kmeans = KMeans(n_clusters=5, random_state=123)
+    kmeans = KMeans(n_clusters=6, random_state=123)
     # fit object
     kmeans.fit(X)
     # predict using object
