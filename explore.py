@@ -343,3 +343,26 @@ def visualize_clusters(df, centroids, scaled_ei_threshold_value):
     plt.xlabel("Average Number of Units per Building")
     plt.ylabel("Evolution Index")
     plt.show()
+
+def growth_rate_line_plot(city_df, city_year_df, global_df):
+    
+    sns.lineplot(data=city_df, x="year", y="city_state_high_density_value_delta_pct", label="City Growth Rate")
+    sns.lineplot(data=global_df, x="year", y="market_volume_delta_pct", label="Market Growth Rate")
+    plt.axvline(x=city_year_df.year.values[0], color="r", linestyle='-', label=city_year_df.cluster.values[0])
+    plt.axhline(y=0, color="grey", linestyle='-', label="0% Growth")
+    for i in range(22):
+        plt.text(
+            city_df.year.iloc[i],
+            city_df.city_state_high_density_value_delta_pct.iloc[i],
+            f"{city_df.cluster.iloc[i]}",
+            color='black',
+            fontsize=9,
+            ha="center"
+        )
+    plt.suptitle(f"What was the trajectory of the multifamily {city_year_df.city.values[0]} housing market in {city_year_df.year.values[0]}?")
+    plt.title(f"""These numbers are scaled:
+    EI == {city_year_df.ei.values[0]:.3}; Average Number of Units per Building == {city_year_df.avg_units_per_bldg.values[0]:.3}""")
+    plt.xlabel("Year")
+    plt.ylabel("Growth Rate")
+    plt.legend()
+    plt.show()
