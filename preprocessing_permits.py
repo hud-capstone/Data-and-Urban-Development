@@ -219,6 +219,10 @@ def create_clusters(df):
     # mask df to exclude 1997 (no prior year growth measures)
     df = df[df.year > 1997]
 
+    # this line of code gets the index from the first observation where the unscaled ei greater than or equal to 1 and stores it in the
+    # unscaled_ei_threshold_index variable
+    unscaled_ei_threshold_index = df[df.ei >= 1].sort_values(by=["ei"]).head(1).index[0]
+
     # scale the features
 
     # create object
@@ -243,7 +247,10 @@ def create_clusters(df):
     # create centriods object
     centroids = pd.DataFrame(kmeans.cluster_centers_, columns=X.columns)
 
-    return df, kmeans, centroids, scaler
+    # this line gets the value of the scaled ei where the index of the scaled df is equal to the unscaled_ei_threshold_index
+    scaled_ei_threshold_value = df[df.index == unscaled_ei_threshold_index]["ei"].values[0]
+
+    return df, kmeans, centroids, scaler, scaled_ei_threshold_value
 
 #__main prep__#
 

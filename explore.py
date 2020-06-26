@@ -219,21 +219,21 @@ def plot_mortgage_vol_by_year(df):
 def get_stat_test_results(stat, pvalue, alpha):
     "This function returns the results of a hypothesis test given the statistic, pvalue, and alpha for a test."
 
-    print(f"statistic = {stat:.5f}")
-    print(f"  p-value = {pvalue:.5f}")
+    print(f"statistic = {stat}")
+    print(f"  p-value = {pvalue}")
     print()
     if pvalue < alpha:
         print("Reject null hypothesis")
     else:
         print("Fail to reject null hypothesis")
 
-# def visualize_clusters(df, centriods):
+# def visualize_clusters(df, centroids):
 #     for cluster, subset in df.groupby("cluster"):
 #         plt.scatter(
 #             subset.avg_units_per_bldg, subset.market_share, label="cluster" + str(cluster), alpha=0.6
 #         )
 
-#     centriods.plot.scatter(
+#     centroids.plot.scatter(
 #         x="avg_units_per_bldg",
 #         y="market_share",
 #         c="black",
@@ -285,7 +285,7 @@ def get_stat_test_results(stat, pvalue, alpha):
 #     plt.ylabel("Market Share")
 #     plt.show()
 
-def visualize_clusters(df, centroids):
+def visualize_clusters(df, centroids, scaled_ei_threshold_value):
     for cluster, subset in df.groupby("cluster"):
         plt.scatter(
             subset.avg_units_per_bldg, subset.ei, label="cluster" + str(cluster), alpha=0.6
@@ -306,9 +306,9 @@ def visualize_clusters(df, centroids):
     houston_2009.plot.scatter(
         x="avg_units_per_bldg",
         y="ei",
-        c="firebrick",
-        marker="x",
-        s=500,
+        c="magenta",
+        marker="X",
+        s=250,
         ax=plt.gca(),
         label="Houston 2009",
     )
@@ -318,9 +318,9 @@ def visualize_clusters(df, centroids):
     seattle_2010.plot.scatter(
         x="avg_units_per_bldg",
         y="ei",
-        c="purple",
-        marker="x",
-        s=500,
+        c="cyan",
+        marker="X",
+        s=250,
         ax=plt.gca(),
         label="Seattle 2010",
     )
@@ -330,16 +330,16 @@ def visualize_clusters(df, centroids):
     dallas_2012.plot.scatter(
         x="avg_units_per_bldg",
         y="ei",
-        c="magenta",
-        marker="x",
-        s=500,
+        c="lime",
+        marker="X",
+        s=250,
         ax=plt.gca(),
         label="Dallas 2012",
     )
 
+    plt.axhline(y=scaled_ei_threshold_value, color="r", linestyle='-', label="EI Threshold")
     plt.legend()
-    plt.title("What groupings exist when we cluster by the average number of units per building and evolution index")
+    plt.title("What groupings exist when we cluster by the average number of units per building and evolution index?")
     plt.xlabel("Average Number of Units per Building")
     plt.ylabel("Evolution Index")
-    plt.axhline(y=-0.5, color='r', linestyle='-')
     plt.show()
