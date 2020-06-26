@@ -171,3 +171,175 @@ def calculate_p_values_for_vol_loans(df):
     plt.ylabel("Mortgages Approved, in Dollars")
     plt.xlabel("City")
     plt.legend()
+
+def plot_mortgage_vol_by_year(df):
+    """
+    This function groups the final mortgage amount by city, state, fiscal year, and activity description and plots a line graph of the total mortgage volume.
+    """
+
+    # group by city, state, fiscal year, and activity description
+    # calculate count of mortgages and volume
+    city_state_all_activity = pd.DataFrame(
+        df.groupby(
+            [
+                "project_city",
+                "project_state",
+                "fiscal_year_of_firm_commitment_activity",
+                "activity_description",
+            ]
+        )["final_mortgage_amount"]
+        .agg(["count", "sum"])
+        .reset_index()
+        .sort_values(by=["count", "sum"], ascending=False)
+    )
+
+    fig, ax = plt.subplots()
+
+    # create lineplot
+    sns.lineplot(
+        data=city_state_all_activity,
+        x="fiscal_year_of_firm_commitment_activity",
+        y="sum",
+        hue="activity_description",
+        ci=False,
+        ax=ax,
+        # palette=palette,
+    )
+
+    # set title for legend
+    legend = ax.legend()
+    legend.texts[0].set_text("Activity Description")
+
+    # format labels
+    plt.xlabel("Fiscal Year")
+    plt.ylabel("Total Mortgage Volume")
+    plt.title("Total Mortgage Volume by Fiscal Year")
+    plt.show()
+
+def get_stat_test_results(stat, pvalue, alpha):
+    "This function returns the results of a hypothesis test given the statistic, pvalue, and alpha for a test."
+
+    print(f"statistic = {stat}")
+    print(f"  p-value = {pvalue}")
+    print()
+    if pvalue < alpha:
+        print("Reject null hypothesis")
+    else:
+        print("Fail to reject null hypothesis")
+
+# def visualize_clusters(df, centroids):
+#     for cluster, subset in df.groupby("cluster"):
+#         plt.scatter(
+#             subset.avg_units_per_bldg, subset.market_share, label="cluster" + str(cluster), alpha=0.6
+#         )
+
+#     centroids.plot.scatter(
+#         x="avg_units_per_bldg",
+#         y="market_share",
+#         c="black",
+#         marker="x",
+#         s=1000,
+#         ax=plt.gca(),
+#         label="centriod",
+#     )
+
+#     houston_2009 = df[(df.city == "Houston") & (df.state == "TX") & (df.year == 2009)]
+
+#     houston_2009.plot.scatter(
+#         x="avg_units_per_bldg",
+#         y="market_share",
+#         c="firebrick",
+#         marker="x",
+#         s=500,
+#         ax=plt.gca(),
+#         label="Houston 2009",
+#     )
+
+#     seattle_2010 = df[(df.city == "Seattle") & (df.state == "WA") & (df.year == 2010)]
+
+#     seattle_2010.plot.scatter(
+#         x="avg_units_per_bldg",
+#         y="market_share",
+#         c="purple",
+#         marker="x",
+#         s=500,
+#         ax=plt.gca(),
+#         label="Seattle 2010",
+#     )
+
+#     dallas_2012 = df[(df.city == "Dallas") & (df.state == "TX")  & (df.year == 2012)]
+
+#     dallas_2012.plot.scatter(
+#         x="avg_units_per_bldg",
+#         y="market_share",
+#         c="magenta",
+#         marker="x",
+#         s=500,
+#         ax=plt.gca(),
+#         label="Dallas 2012",
+#     )
+
+#     plt.legend()
+#     plt.title("What groupings exist when we cluster by the average number of units per building and market share?")
+#     plt.xlabel("Average Number of Units per Building")
+#     plt.ylabel("Market Share")
+#     plt.show()
+
+def visualize_clusters(df, centroids, scaled_ei_threshold_value):
+    for cluster, subset in df.groupby("cluster"):
+        plt.scatter(
+            subset.avg_units_per_bldg, subset.ei, label="cluster" + str(cluster), alpha=0.6
+        )
+
+    centroids.plot.scatter(
+        x="avg_units_per_bldg",
+        y="ei",
+        c="black",
+        marker="x",
+        s=1000,
+        ax=plt.gca(),
+        label="centriod",
+    )
+
+    houston_2009 = df[(df.city == "Houston") & (df.state == "TX") & (df.year == 2009)]
+
+    houston_2009.plot.scatter(
+        x="avg_units_per_bldg",
+        y="ei",
+        c="magenta",
+        marker="X",
+        s=250,
+        ax=plt.gca(),
+        label="Houston 2009",
+    )
+
+    seattle_2010 = df[(df.city == "Seattle") & (df.state == "WA") & (df.year == 2010)]
+
+    seattle_2010.plot.scatter(
+        x="avg_units_per_bldg",
+        y="ei",
+        c="cyan",
+        marker="X",
+        s=250,
+        ax=plt.gca(),
+        label="Seattle 2010",
+    )
+
+    dallas_2012 = df[(df.city == "Dallas") & (df.state == "TX")  & (df.year == 2012)]
+
+    dallas_2012.plot.scatter(
+        x="avg_units_per_bldg",
+        y="ei",
+        c="lime",
+        marker="X",
+        s=250,
+        ax=plt.gca(),
+        label="Dallas 2012",
+    )
+
+    plt.axhline(y=scaled_ei_threshold_value, color="r", linestyle='-', label="EI Threshold")
+    plt.legend()
+    plt.title("What groupings exist when we cluster by the average number of units per building and evolution index?")
+    plt.xlabel("Average Number of Units per Building")
+    plt.ylabel("Evolution Index")
+    plt.show()
