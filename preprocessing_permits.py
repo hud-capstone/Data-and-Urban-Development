@@ -315,33 +315,31 @@ def labeling_future_data(df):
     
     df.sort_values(by=['city', 'state', 'year'])
     
-    df["bldgs_est_2y_growth_rate"] = (df.sort_values(["year"])
+    df["bldgs_two_yr_growth_rate"] = (df.sort_values(["year"])
                                   .groupby(["city", "state"])[["total_high_density_bldgs"]]
                                   .pct_change(2))
     
-    df["units_value_est_2y_growth_rate"] = (df.sort_values(["year"])
+    df["value_two_yr_growth_rate"] = (df.sort_values(["year"])
                                   .groupby(["city", "state"])[["total_high_density_value"]]
                                   .pct_change(2))
+
+    df['future_bldgs_two_yr_growth_rate'] = df["bldgs_two_yr_growth_rate"].shift(-2)
                                   
-    df['five_or_more_units_value_est_2y'] = df["units_value_est_2y_growth_rate"].shift(-2)
+    df['future_value_two_yr_growth_rate'] = df["value_two_yr_growth_rate"].shift(-2)
     
-    df['five_or_more_units_bldgs_est_2y'] = df["bldgs_est_2y_growth_rate"].shift(-2)
+    Q3 = df.future_bldgs_two_yr_growth_rate.quantile(.75)
     
-    df.drop(columns=["bldgs_est_2y_growth_rate", "units_value_est_2y_growth_rate"])
-    
-    Q3 = df.five_or_more_units_bldgs_est_2y.quantile(.75)
-    
-    Q1 = df.five_or_more_units_bldgs_est_2y.quantile(.25)
+    Q1 = df.future_bldgs_two_yr_growth_rate.quantile(.25)
     
     upper_fence_quantity = Q3 + ((Q3-Q1)*1.5)
     
-    Q3 = df.five_or_more_units_value_est_2y.quantile(.75)
+    Q3 = df.future_value_two_yr_growth_rate.quantile(.75)
     
-    Q1 = df.five_or_more_units_value_est_2y.quantile(.25)
+    Q1 = df.future_value_two_yr_growth_rate.quantile(.25)
     
     upper_fence_volume = Q3 + ((Q3-Q1)*1.5)
     
-    df['should_enter'] = (df.five_or_more_units_value_est_2y > upper_fence_volume) | (df.five_or_more_units_bldgs_est_2y > upper_fence_quantity)
+    df['should_enter'] = (df.future_value_two_yr_growth_rate > upper_fence_volume) | (df.future_bldgs_two_yr_growth_rate > upper_fence_quantity)
     
     return df
 
