@@ -198,7 +198,7 @@ def acquire_building_permits():
         # rename columns
         rename_building_permit_columns(df)
 
-        for i in range(1980, 2019):
+        for i in range(1997, 2019):
 
             # read the txt file at url where i is the year in range
             year_df = pd.read_csv(
