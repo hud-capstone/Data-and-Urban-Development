@@ -426,6 +426,10 @@ def permits_preprocessing_mother_function(modeling=False, features_for_modeling 
         # label data
         df = labeling_future_data(df)
 
+        #oversample the data
+        df = df.append(df[df.should_enter])
+        df = df.append(df[df.should_enter])
+
         train_scaled, validate_scaled, test_scaled, y_train, y_validate, y_test = prep_data_for_modeling_permits(df, features_for_modeling, label_feature)
 
         return train_scaled, validate_scaled, test_scaled, y_train, y_validate, y_test
