@@ -313,15 +313,21 @@ def labeling_future_data(df):
     """this function takes in a data frame and returns a boolean column that identifies
     if a city_state_year is a market that should be entered"""
     
-    df["five_or_more_units_bldgs_est_2y"] = (df.sort_values(["year"])
-                                  .groupby(["city", "state"])[["total_high_density_bldgs"]]
-                                  .pct_change(2)
-                                  .shift(-2))
+    df.sort_values(by=['city', 'state', 'year'])
     
-    df["five_or_more_units_value_est_2y"] = (df.sort_values(["year"])
+    df["bldgs_est_2y_growth_rate"] = (df.sort_values(["year"])
+                                  .groupby(["city", "state"])[["total_high_density_bldgs"]]
+                                  .pct_change(2))
+    
+    df["units_value_est_2y_growth_rate"] = (df.sort_values(["year"])
                                   .groupby(["city", "state"])[["total_high_density_value"]]
-                                  .pct_change(2)
-                                  .shift(-2))
+                                  .pct_change(2))
+                                  
+    df['five_or_more_units_value_est_2y'] = df["units_value_est_2y_growth_rate"].shift(-2)
+    
+    df['five_or_more_units_bldgs_est_2y'] = df["bldgs_est_2y_growth_rate"].shift(-2)
+    
+    df.drop(columns=["bldgs_est_2y_growth_rate", "units_value_est_2y_growth_rate"])
     
     Q3 = df.five_or_more_units_bldgs_est_2y.quantile(.75)
     
