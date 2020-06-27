@@ -383,6 +383,7 @@ def permits_preprocessing_mother_function(modeling=False, features_for_modeling 
     """
     Docstring
     """
+    
     if modeling == False:
         # call get_permits_model_df
         df = get_permits_model_df()
@@ -397,6 +398,7 @@ def permits_preprocessing_mother_function(modeling=False, features_for_modeling 
         df = labeling_future_data(df)
 
         return df
+
     else:
         # call get_permits_model_df
         df = get_permits_model_df()
