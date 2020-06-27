@@ -181,7 +181,7 @@ def rename_building_permit_columns(df):
 
 def acquire_building_permits():
     """
-    This function conditonally acquires the building permit survey data from the US Census Bureau from the Cen
+    This function conditonally acquires the building permit survey data from the US Census Bureau or reads the existing csv file with the data
     """
     
     # conditional

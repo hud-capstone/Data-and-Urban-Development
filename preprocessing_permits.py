@@ -213,13 +213,13 @@ def calculate_evolution_index(df):
 
 def create_clusters(df):
     """
-    This function creates clusters using average units per building & evolution index which calculated within.
+    This function creates clusters using average units per building & evolution index.
     """
 
     # mask df to exclude 1997 (no prior year growth measures)
     df = df[df.year > 1997]
 
-    # this line of code gets the index from the first observation where the unscaled ei greater than or equal to 1 and stores it in the
+    # this line of code gets the index from the first observation where the unscaled ei is greater than or equal to 1 and stores it in the
     # unscaled_ei_threshold_index variable
     unscaled_ei_threshold_index = df[df.ei >= 1].sort_values(by=["ei"]).head(1).index[0]
 
@@ -368,7 +368,7 @@ def min_max_scaler(train,validate, test):
 
 def prep_data_for_modeling_permits(df, features_for_modeling, label_feature):
 
-    # To avoid Nan's, I have removed all data from 2006 (because all the var's would be nan)
+    # To avoid Nan's, I have removed all data from 1997 (because all the var's would be nan)
     df_model = df[df.year > 1997]
 
     # Create an observation id to reduce the chance of mistake's
