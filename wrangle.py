@@ -242,3 +242,23 @@ def acquire_building_permits():
         df.to_csv("building_permits.csv")
     
     return df
+
+def prep_building_permits(df):
+    
+    df["city"] = df.cbsa_name.str.split("  ", 1, expand = True)[0]
+    
+    df["state"] = df.cbsa_name.str.split("  ", 1, expand = True)[1]
+    
+    df["major_city"] = df.city.str.split("-", 1, expand=True)[0]
+    
+    df["major_state"] = df.state.str.split("-", 1, expand=True)[0]
+    
+    df["metropolitan_area"] = df.state.str.split("-", 1, expand=True)[1]
+    
+    df["metropolitan_area"] = df.major_state.str.split(" ", 1, expand=True)[1]
+    
+    df["major_state"] = df.major_state.str.split(" ", 1, expand=True)[0]
+    
+    df = df.groupby(["major_city","major_state", "survey_date"]).sum().reset_index()
+    
+    return df

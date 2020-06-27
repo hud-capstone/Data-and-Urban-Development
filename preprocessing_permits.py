@@ -19,26 +19,6 @@ import wrangle as wr
 # Builing Permits #
 # --------------- #
 
-def prep_building_permits(df):
-    
-    df["city"] = df.cbsa_name.str.split("  ", 1, expand = True)[0]
-    
-    df["state"] = df.cbsa_name.str.split("  ", 1, expand = True)[1]
-    
-    df["major_city"] = df.city.str.split("-", 1, expand=True)[0]
-    
-    df["major_state"] = df.state.str.split("-", 1, expand=True)[0]
-    
-    df["metropolitan_area"] = df.state.str.split("-", 1, expand=True)[1]
-    
-    df["metropolitan_area"] = df.major_state.str.split(" ", 1, expand=True)[1]
-    
-    df["major_state"] = df.major_state.str.split(" ", 1, expand=True)[0]
-    
-    df = df.groupby(["major_city","major_state", "survey_date"]).sum().reset_index()
-    
-    return df
-
 def get_permits_model_df():
     """
     Docstring
@@ -48,7 +28,7 @@ def get_permits_model_df():
     df = wr.acquire_building_permits()
 
     # call prep_building_permits
-    df = prep_building_permits(df)
+    df = wr.prep_building_permits(df)
 
     # rename columns inplace
     df.rename(
