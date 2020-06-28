@@ -366,3 +366,13 @@ def growth_rate_line_plot(city_df, city_year_df, global_df):
     plt.ylabel("Growth Rate")
     plt.legend()
     plt.show()
+
+def plot_inertia(X):
+    pd.Series({k: get_inertia(k, X) for k in range(2, 21)}).plot()
+    plt.grid()
+    plt.suptitle("How many clusters (k) should we create using our KMeans clustering algorithm?")
+    plt.title("Where do we first encounter diminishing returns with regards to intertia with subsequent increases to k?")
+    plt.xlabel("k")
+    plt.ylabel("inertia")
+    plt.xticks(range(1, 21))
+    plt.show()
