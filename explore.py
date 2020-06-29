@@ -339,7 +339,7 @@ def visualize_clusters(df, centroids, scaled_ei_threshold_value):
 
     plt.axhline(y=scaled_ei_threshold_value, color="r", linestyle='-', label="EI Threshold")
     plt.legend()
-    plt.title("What groupings exist when we cluster by the average number of units per building and evolution index?")
+    plt.title("What groupings exist when we cluster by the average number of units per building and the evolution index?")
     plt.xlabel("Average Number of Units per Building")
     plt.ylabel("Evolution Index")
     plt.show()
@@ -364,8 +364,8 @@ def growth_rate_line_plot(df, city, year):
             fontsize=10,
             ha ="center"
         )
-    plt.suptitle(f"What was the trajectory of the multifamily {city_df.city.values[0]} housing market in {year}?")
-    plt.title(f"""EI == {city_df[city_df.year == year].ei.values[0]:.3}; Average Number of Units per Building == {city_df[city_df.year == year].avg_units_per_bldg.values[0]:.3}""")
+    plt.suptitle(f"What has been the trajectory of the {city_df.city.values[0]} multifamily housing market?")
+    plt.title(f"""{city_df.city.values[0]} {year} Clustering Metrics: EI == {city_df[city_df.year == year].ei.values[0]:.3}; Average Number of Units per Building == {city_df[city_df.year == year].avg_units_per_bldg.values[0]:.3}""")
     plt.xlabel("Year")
     plt.ylabel("Growth Rate (%)")
     plt.legend()
