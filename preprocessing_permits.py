@@ -230,7 +230,7 @@ def create_clusters(df):
     # this line gets the value of the scaled ei where the index of the scaled df is equal to the unscaled_ei_threshold_index
     scaled_ei_threshold_value = df[df.index == unscaled_ei_threshold_index]["ei"].values[0]
 
-    return df, kmeans, centroids, scaler, scaled_ei_threshold_value
+    return df, kmeans, centroids, scaler, scaled_ei_threshold_value, X
 
 #__main prep__#
 
@@ -383,7 +383,7 @@ def permits_preprocessing_mother_function(modeling=False, features_for_modeling 
     """
     Docstring
     """
-    
+
     if modeling == False:
         # call get_permits_model_df
         df = get_permits_model_df()
