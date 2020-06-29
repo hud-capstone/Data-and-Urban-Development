@@ -301,41 +301,41 @@ def visualize_clusters(df, centroids, scaled_ei_threshold_value):
         label="centriod",
     )
 
-    houston_2009 = df[(df.city == "Houston") & (df.state == "TX") & (df.year == 2009)]
+    # houston_2009 = df[(df.city == "Houston") & (df.state == "TX") & (df.year == 2009)]
 
-    houston_2009.plot.scatter(
-        x="avg_units_per_bldg",
-        y="ei",
-        c="magenta",
-        marker="X",
-        s=250,
-        ax=plt.gca(),
-        label="Houston 2009",
-    )
+    # houston_2009.plot.scatter(
+    #     x="avg_units_per_bldg",
+    #     y="ei",
+    #     c="magenta",
+    #     marker="X",
+    #     s=250,
+    #     ax=plt.gca(),
+    #     label="Houston 2009",
+    # )
 
-    seattle_2010 = df[(df.city == "Seattle") & (df.state == "WA") & (df.year == 2010)]
+    # seattle_2010 = df[(df.city == "Seattle") & (df.state == "WA") & (df.year == 2010)]
 
-    seattle_2010.plot.scatter(
-        x="avg_units_per_bldg",
-        y="ei",
-        c="cyan",
-        marker="X",
-        s=250,
-        ax=plt.gca(),
-        label="Seattle 2010",
-    )
+    # seattle_2010.plot.scatter(
+    #     x="avg_units_per_bldg",
+    #     y="ei",
+    #     c="cyan",
+    #     marker="X",
+    #     s=250,
+    #     ax=plt.gca(),
+    #     label="Seattle 2010",
+    # )
 
-    dallas_2012 = df[(df.city == "Dallas") & (df.state == "TX")  & (df.year == 2012)]
+    # dallas_2012 = df[(df.city == "Dallas") & (df.state == "TX")  & (df.year == 2012)]
 
-    dallas_2012.plot.scatter(
-        x="avg_units_per_bldg",
-        y="ei",
-        c="lime",
-        marker="X",
-        s=250,
-        ax=plt.gca(),
-        label="Dallas 2012",
-    )
+    # dallas_2012.plot.scatter(
+    #     x="avg_units_per_bldg",
+    #     y="ei",
+    #     c="lime",
+    #     marker="X",
+    #     s=250,
+    #     ax=plt.gca(),
+    #     label="Dallas 2012",
+    # )
 
     plt.axhline(y=scaled_ei_threshold_value, color="r", linestyle='-', label="EI Threshold")
     plt.legend()
@@ -367,7 +367,7 @@ def growth_rate_line_plot(df, city, year):
     plt.suptitle(f"What was the trajectory of the multifamily {city_df.city.values[0]} housing market in {year}?")
     plt.title(f"""EI == {city_df[city_df.year == year].ei.values[0]:.3}; Average Number of Units per Building == {city_df[city_df.year == year].avg_units_per_bldg.values[0]:.3}""")
     plt.xlabel("Year")
-    plt.ylabel("Growth Rate")
+    plt.ylabel("Growth Rate (%)")
     plt.legend()
     plt.show()
 
@@ -380,3 +380,45 @@ def plot_inertia(X):
     plt.ylabel("inertia")
     plt.xticks(range(1, 21))
     plt.show()
+
+def rep_v_est_difference(df):
+    """
+    This function calculates the difference between the report and estimated numbers for the metrics relevant to
+    our analysis.
+    """
+    
+    abs_diff_buildings = (
+        round(
+            abs(df.five_or_more_units_bldgs_rep - df.five_or_more_units_bldgs_est).sum()
+            / df.five_or_more_units_bldgs_est.sum(),
+            3,
+        )
+        * 100
+    )
+
+    abs_diff_units = (
+        round(
+            abs(df.five_or_more_units_units_rep - df.five_or_more_units_units_est).sum()
+            / df.five_or_more_units_units_est.sum(),
+            3,
+        )
+        * 100
+    )
+
+    abs_diff_value = (
+        round(
+            abs(df.five_or_more_units_value_rep - df.five_or_more_units_value_est).sum()
+            / df.five_or_more_units_value_est.sum(),
+            3,
+        )
+        * 100
+    )
+
+    print(f"""There is an {abs_diff_buildings:.2f}% difference between the reported and estimated total number of high-density, multifamily buildings 
+    in the dataset.""")
+    print()
+    print(f"""There is an {abs_diff_units:.2f}% difference between the reported and estimated total number of high-density, multifamily units in 
+    the dataset.""")
+    print()
+    print(f"""There is an {abs_diff_value:.2f}% difference between the reported and estimated total valuation of high-density, multifamily 
+    structures in the dataset.""")
