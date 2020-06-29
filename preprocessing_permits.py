@@ -409,8 +409,29 @@ def permits_preprocessing_mother_function(modeling=False, features_for_modeling 
         # filter top cities
         df = filter_top_cities_building_permits(df)
 
-        # label data
-        df = labeling_future_data(df)
+        # bring clusters
+        df, kmeans, centroids, scaler, scaled_ei_threshold_value = create_clusters(df)
+
+        # When predicting a bool (emerging_market only)
+        df["test_future_cluster"] = (df.sort_values(["year"])
+                                  .groupby(["city", "state"])[["cluster"]]
+                                  .shift(-2))
+
+        df_emerging = (
+            df[((df.test_future_cluster == 3) | (df.test_future_cluster == 1)) 
+            & ((df.cluster == 4) | (df.cluster == 0))]
+        )
+
+        df_emerging["should_enter"] = True
+
+        df["should_enter"] = df_emerging.should_enter
+
+        df.should_enter = df.should_enter.fillna(False)
+
+        df = df.merge(centroids, how="left", left_on="cluster", right_on=centroids.index)
+
+        # remove 2018 and 2019 values as they have null values
+        df = df[df.year < 2018]
 
         #oversample the data
         df = df.append(df[df.should_enter])
