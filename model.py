@@ -20,6 +20,10 @@ from sklearn.naive_bayes import MultinomialNB
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+from sklearn.preprocessing import MinMaxScaler, StandardScaler, PowerTransformer
+from sklearn.cluster import KMeans
+
+import preprocessing_permits as pr
 
 # ---------------------- #
 #        Modeling        #
@@ -156,7 +160,7 @@ def accuracy_report(model, y_pred, y_train):
 
 ############################################################################################################
 
-                                        # Modeling by hand #
+                                        # Traditional Modeling #
 
 ############################################################################################################
 
@@ -259,3 +263,71 @@ def run_lg(X_train, y_train):
     y_pred = logit.predict(X_train)
     return logit, y_pred
 
+# ------------------ #
+#    Predictions     #
+# ------------------ #
+
+def prep_prediction_data(centroids):
+    df = pr.permits_preprocessing_mother_function()
+    df = df[df.year > 1997]
+    
+    # create object
+    scaler = PowerTransformer()
+    # fit object
+    scaler.fit(df[["avg_units_per_bldg"]])
+    # transform using object
+    df["avg_units_per_bldg_scaled"] = scaler.transform(df[["avg_units_per_bldg"]])
+
+    scaler.fit(df[["ei"]])
+    # transform using object
+    df["ei_scaled"] = scaler.transform(df[["ei"]])
+
+    # define features for KMeans modeling
+    X = df[["avg_units_per_bldg_scaled", "ei_scaled"]]
+
+    # cluster using k of 6
+
+    # create object
+    kmeans = KMeans(n_clusters=6, random_state=123)
+    # fit object
+    kmeans.fit(X)
+    # predict using object
+    df["cluster"] = kmeans.predict(X)
+
+    df = df.merge(centroids, how="left", left_on="cluster", right_on=centroids.index)
+
+    return df
+
+# Helper function used to updated the scaled arrays and transform them into usable dataframes
+def return_values_prediction(scaler, df):
+    train_scaled = pd.DataFrame(scaler.transform(df), columns=df.columns.values).set_index([df.index.values])
+    return scaler, train_scaled
+
+# Linear scaler
+def min_max_scaler_prediction(df):
+    scaler = MinMaxScaler().fit(df)
+    scaler, df_scaled = return_values_prediction(scaler, df)
+    return scaler, df_scaled
+
+def create_predictions_df(df, kmeans, knn):
+    predictions = df[(df.year == 2018) | (df.year == 2019)].groupby("city_state")[["avg_units_per_bldg_scaled", "ei_scaled", "market_volume_delta_pct", "total_high_density_value"]].mean()
+    # define features for KMeans modeling
+    X = predictions[["avg_units_per_bldg_scaled", "ei_scaled"]]
+
+    predictions["cluster"] = kmeans.predict(X)
+
+    scaler, predictions_scaled = min_max_scaler_prediction(predictions)
+
+    predictions["label"] = knn.predict(predictions_scaled)
+
+    city = predictions.reset_index().city_state.str.split("_", n=1, expand=True)[0]
+
+    state = predictions.reset_index().city_state.str.split("_", n=1, expand=True)[1]
+
+    predictions = predictions.reset_index()
+
+    predictions["city"] = city
+
+    predictions["state"] = state
+
+    return predictions
