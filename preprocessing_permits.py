@@ -410,7 +410,7 @@ def permits_preprocessing_mother_function(modeling=False, features_for_modeling 
         df = filter_top_cities_building_permits(df)
 
         # bring clusters
-        df, kmeans, centroids, scaler, scaled_ei_threshold_value = create_clusters(df)
+        df, kmeans, centroids, scaler, scaled_ei_threshold_value, X = create_clusters(df)
 
         # When predicting a bool (emerging_market only)
         df["test_future_cluster"] = (df.sort_values(["year"])
