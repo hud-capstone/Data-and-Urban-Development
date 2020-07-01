@@ -422,3 +422,46 @@ def rep_v_est_difference(df):
     print()
     print(f"""There is an {abs_diff_value:.2f}% difference between the reported and estimated total valuation of high-density, multifamily 
     structures in the dataset.""")
+
+
+def create_prediction_graph(predictions):
+    plt.figure(figsize=(15,5))
+    sns.countplot(data=predictions, x="recommendation_label")
+    plt.title("Number of cities within each sub")
+
+    plt.text(
+        0,
+        15,
+        "13",
+        color = 'black',
+        fontsize=15,
+        ha ="center"
+    )
+
+    plt.text(
+        1,
+        15,
+        "58",
+        color = 'black',
+        fontsize=15,
+        ha ="center"
+    )
+
+    plt.text(
+        2,
+        15,
+        "48",
+        color = 'black',
+        fontsize=15,
+        ha ="center"
+    )
+
+    plt.text(
+        3,
+        15,
+        "11",
+        color = 'black',
+        fontsize=15,
+        ha ="center"
+    )
+            
