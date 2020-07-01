@@ -24,6 +24,7 @@ from sklearn.preprocessing import MinMaxScaler, StandardScaler, PowerTransformer
 from sklearn.cluster import KMeans
 
 import preprocessing_permits as pr
+import numpy as np
 
 # ---------------------- #
 #        Modeling        #
@@ -310,12 +311,14 @@ def min_max_scaler_prediction(df):
     return scaler, df_scaled
 
 def create_predictions_df(df, kmeans, knn):
-    predictions = df[(df.year == 2018) | (df.year == 2019)].groupby("city_state")[["avg_units_per_bldg_scaled", "ei_scaled", "market_volume_delta_pct", "total_high_density_value"]].mean()
+    predictions = df[(df.year == 2018) | (df.year == 2019)].groupby("city_state")[["avg_units_per_bldg_scaled", "ei_scaled", "avg_units_per_bldg_x", "ei_x", "market_volume_delta_pct", "total_high_density_value"]].mean()
     # define features for KMeans modeling
     X = predictions[["avg_units_per_bldg_scaled", "ei_scaled"]]
 
     predictions["cluster"] = kmeans.predict(X)
 
+    predictions.drop(columns=["avg_units_per_bldg_scaled", "ei_scaled"], inplace=True)
+    
     scaler, predictions_scaled = min_max_scaler_prediction(predictions)
 
     predictions["label"] = knn.predict(predictions_scaled)
@@ -329,5 +332,34 @@ def create_predictions_df(df, kmeans, knn):
     predictions["city"] = city
 
     predictions["state"] = state
+
+
+    df_best = (
+        predictions[(predictions.label) & ((predictions.cluster == 0) | (predictions.cluster == 4))]
+    )
+
+    df_high_density = (
+        predictions[(predictions.label) & ((predictions.cluster == 5) | (predictions.cluster == 2))]
+    )
+
+    df_stable_high_markets = (
+        predictions[(predictions.label) & ((predictions.cluster == 3) | (predictions.cluster == 1))]
+    )
+
+    df_best["recommendation_label"] = "Best_ROI"
+
+    df_high_density["recommendation_label"] = "medium_ROI"
+
+    df_stable_high_markets["recommendation_label"] = "Stable_High"
+
+    predictions["recommendation_label"] = np.nan
+
+    predictions.recommendation_label = predictions.recommendation_label.fillna(df_best.recommendation_label)
+
+    predictions.recommendation_label = predictions.recommendation_label.fillna(df_high_density.recommendation_label)
+
+    predictions.recommendation_label = predictions.recommendation_label.fillna(df_stable_high_markets.recommendation_label)
+
+    predictions.recommendation_label = predictions.recommendation_label.fillna("Not Recommended to Enter")
 
     return predictions
