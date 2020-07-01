@@ -144,7 +144,7 @@ def calculate_evolution_index(df):
     df["market_volume"] = df.groupby("year").total_high_density_value.transform("sum")
 
     # calculate market growth rate for the population from prior year
-    df["market_volume_delta_pct"] = np.where(df.year > 1980, df["market_volume"].pct_change(), np.nan)
+    df["market_volume_delta_pct"] = np.where(df.year > 1997, df["market_volume"].pct_change(), np.nan)
 
     # calc evolution index for population
     df["ei"] = (1 + df.city_state_high_density_value_delta_pct) / (1 + df.market_volume_delta_pct)
@@ -393,9 +393,6 @@ def permits_preprocessing_mother_function(modeling=False, features_for_modeling 
 
         # filter top cities
         df = filter_top_cities_building_permits(df)
-
-        # label data
-        df = labeling_future_data(df)
 
         return df
 
