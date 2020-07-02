@@ -432,7 +432,7 @@ def create_prediction_graph(predictions):
     plt.text(
         0,
         15,
-        "13",
+        "44",
         color = 'black',
         fontsize=15,
         ha ="center"
@@ -441,7 +441,7 @@ def create_prediction_graph(predictions):
     plt.text(
         1,
         15,
-        "58",
+        "19",
         color = 'black',
         fontsize=15,
         ha ="center"
@@ -450,7 +450,7 @@ def create_prediction_graph(predictions):
     plt.text(
         2,
         15,
-        "48",
+        "9",
         color = 'black',
         fontsize=15,
         ha ="center"
@@ -459,7 +459,7 @@ def create_prediction_graph(predictions):
     plt.text(
         3,
         15,
-        "11",
+        "58",
         color = 'black',
         fontsize=15,
         ha ="center"
