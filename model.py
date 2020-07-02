@@ -268,36 +268,43 @@ def run_lg(X_train, y_train):
 #    Predictions     #
 # ------------------ #
 
-def prep_prediction_data(centroids):
+def prep_prediction_data():
     df = pr.permits_preprocessing_mother_function()
     df = df[df.year > 1997]
-    
-    # create object
-    scaler = PowerTransformer()
-    # fit object
-    scaler.fit(df[["avg_units_per_bldg"]])
-    # transform using object
-    df["avg_units_per_bldg_scaled"] = scaler.transform(df[["avg_units_per_bldg"]])
+   # bring clusters
+    df, kmeans, centroids, scaler, scaled_ei_threshold_value, X = pr.create_clusters(df)
 
-    scaler.fit(df[["ei"]])
-    # transform using object
-    df["ei_scaled"] = scaler.transform(df[["ei"]])
+    df[["avg_units_per_bldg", "ei"]] = scaler.inverse_transform(df[["avg_units_per_bldg", "ei"]])
 
-    # define features for KMeans modeling
-    X = df[["avg_units_per_bldg_scaled", "ei_scaled"]]
+    # # create object
+    # scaler = PowerTransformer()
+    # # fit object
+    # scaler.fit(df[["avg_units_per_bldg"]])
+    # # transform using object
+    # df["avg_units_per_bldg_scaled"] = scaler.transform(df[["avg_units_per_bldg"]])
 
-    # cluster using k of 6
+    # scaler = PowerTransformer()
+    # scaler.fit(df[["ei"]])
+    # # transform using object
+    # df["ei_scaled"] = scaler.transform(df[["ei"]])
 
-    # create object
-    kmeans = KMeans(n_clusters=6, random_state=123)
-    # fit object
-    kmeans.fit(X)
-    # predict using object
-    df["cluster"] = kmeans.predict(X)
+
+
+    # # define features for KMeans modeling
+    # X = df[["avg_units_per_bldg_scaled", "ei_scaled"]]
+
+    # # cluster using k of 6
+
+    # # create object
+    # kmeans = KMeans(n_clusters=6, random_state=123)
+    # # fit object
+    # kmeans.fit(X)
+    # # predict using object
+    # df["cluster"] = kmeans.predict(X)
 
     df = df.merge(centroids, how="left", left_on="cluster", right_on=centroids.index)
 
-    return df
+    return df, kmeans
 
 # Helper function used to updated the scaled arrays and transform them into usable dataframes
 def return_values_prediction(scaler, df):
@@ -311,39 +318,81 @@ def min_max_scaler_prediction(df):
     return scaler, df_scaled
 
 def create_predictions_df(df, kmeans, knn):
-    predictions = df[(df.year == 2018) | (df.year == 2019)].groupby("city_state")[["avg_units_per_bldg_scaled", "ei_scaled", "avg_units_per_bldg_x", "ei_x", "market_volume_delta_pct", "total_high_density_value"]].mean()
-    # define features for KMeans modeling
-    X = predictions[["avg_units_per_bldg_scaled", "ei_scaled"]]
 
-    predictions["cluster"] = kmeans.predict(X)
+    ## Found a mistake - can't just create an average of an aver_units_per_bld. Need to bring in both variables, create the avg, and then calculate the new avg_units_per_bldg
+    # predictions = df[(df.year == 2018) | (df.year == 2019)].groupby("city_state")[["avg_units_per_bldg_x", "ei_x", "total_high_density_bldgs", "total_high_density_value"]].mean()
 
-    predictions.drop(columns=["avg_units_per_bldg_scaled", "ei_scaled"], inplace=True)
+    # predictions = df[(df.year == 2018) | (df.year == 2019)].groupby("city_state")[["total_high_density_units", "ei_x", "total_high_density_bldgs", "total_high_density_value"]].mean()
+    # predictions["avg_units_per_bldg"] = predictions["total_high_density_units"] / predictions["total_high_density_bldgs"]
+
+    # create 2018 & 2019 masked DataFrame
+    predictions = df[(df.year == 2018) | (df.year == 2019)]
+    # create DataFrame for total units over 2018-2019
+    total_units = pd.DataFrame(predictions.groupby(["city", "state"]).total_high_density_units.sum())
+    # create DataFrame for total buildings over 2018-2019
+    total_bldgs = pd.DataFrame(predictions.groupby(["city", "state"]).total_high_density_bldgs.sum())
+    # create DataFrame for total value over 2018-2019
+    total_value = pd.DataFrame(predictions.groupby(["city", "state"]).total_high_density_value.sum())
+    # merging total_units to predictions
+    predictions = predictions.merge(total_units, how="left", on=["city", "state"], suffixes=("_og", "_1819"))
+    # merging total_bldgs to predictions
+    predictions = predictions.merge(total_bldgs, how="left", on=["city", "state"], suffixes=("_og", "_1819"))
+    # merging total_values to predictions
+    predictions = predictions.merge(total_value, how="left", on=["city", "state"], suffixes=("_og", "_1819"))
+
+    # 2018-2019 total units and buildings needed to calculate the proper weighted average
+    predictions = predictions.groupby("city_state")[["total_high_density_units_1819", "total_high_density_bldgs_1819"]].mean()
+
+    # masking initial df variable for last two years 
+    # grouping by city_state to get 130 unique observations
+    # calc mean for ei, total buildings, and total valuation
+    avgs = df[(df.year == 2018) | (df.year == 2019)].groupby("city_state")[["ei_x", "total_high_density_bldgs", "total_high_density_value"]].mean()
     
-    scaler, predictions_scaled = min_max_scaler_prediction(predictions)
+    # predictions["avg_units_per_bldg"] = predictions["total_high_density_units_1819"] / predictions["total_high_density_bldgs_1819"]
+    # predictions.drop(columns="total_high_density_units_1819", inplace=True)
 
-    predictions["label"] = knn.predict(predictions_scaled)
+    # calc weighted average number of units per building over 2018-2019
+    avgs["avg_units_per_bldg"] = predictions["total_high_density_units_1819"] / predictions["total_high_density_bldgs_1819"]
 
-    city = predictions.reset_index().city_state.str.split("_", n=1, expand=True)[0]
+    # create object
+    scaler = PowerTransformer()
+    # fit object
+    scaler.fit(avgs[["avg_units_per_bldg", "ei_x"]])
+    # transform using object
+    avgs[["avg_units_per_bldg", "ei_x"]] = scaler.transform(avgs[["avg_units_per_bldg", "ei_x"]])
+    
+    # define features for KMeans modeling
+    X = avgs[["avg_units_per_bldg", "ei_x"]]
 
-    state = predictions.reset_index().city_state.str.split("_", n=1, expand=True)[1]
+    avgs["cluster"] = kmeans.predict(X)
 
-    predictions = predictions.reset_index()
+    avgs[["avg_units_per_bldg", "ei_x"]] = scaler.inverse_transform(avgs[["avg_units_per_bldg", "ei_x"]])
+    
+    scaler, avgs_scaled = min_max_scaler_prediction(avgs)
 
-    predictions["city"] = city
+    avgs["label"] = knn.predict(avgs_scaled)
 
-    predictions["state"] = state
+    city = avgs.reset_index().city_state.str.split("_", n=1, expand=True)[0]
+
+    state = avgs.reset_index().city_state.str.split("_", n=1, expand=True)[1]
+
+    avgs = avgs.reset_index()
+
+    avgs["city"] = city
+
+    avgs["state"] = state
 
 
     df_best = (
-        predictions[(predictions.label) & ((predictions.cluster == 0) | (predictions.cluster == 4))]
+        avgs[(avgs.label) & ((avgs.cluster == 0) | (avgs.cluster == 4))]
     )
 
     df_high_density = (
-        predictions[(predictions.label) & ((predictions.cluster == 5) | (predictions.cluster == 2))]
+        avgs[(avgs.label) & ((avgs.cluster == 5) | (avgs.cluster == 2))]
     )
 
     df_stable_high_markets = (
-        predictions[(predictions.label) & ((predictions.cluster == 3) | (predictions.cluster == 1))]
+        avgs[(avgs.label) & ((avgs.cluster == 3) | (avgs.cluster == 1))]
     )
 
     df_best["recommendation_label"] = "Best_ROI"
@@ -352,14 +401,14 @@ def create_predictions_df(df, kmeans, knn):
 
     df_stable_high_markets["recommendation_label"] = "Stable_High"
 
-    predictions["recommendation_label"] = np.nan
+    avgs["recommendation_label"] = np.nan
 
-    predictions.recommendation_label = predictions.recommendation_label.fillna(df_best.recommendation_label)
+    avgs.recommendation_label = avgs.recommendation_label.fillna(df_best.recommendation_label)
 
-    predictions.recommendation_label = predictions.recommendation_label.fillna(df_high_density.recommendation_label)
+    avgs.recommendation_label = avgs.recommendation_label.fillna(df_high_density.recommendation_label)
 
-    predictions.recommendation_label = predictions.recommendation_label.fillna(df_stable_high_markets.recommendation_label)
+    avgs.recommendation_label = avgs.recommendation_label.fillna(df_stable_high_markets.recommendation_label)
 
-    predictions.recommendation_label = predictions.recommendation_label.fillna("Not Recommended to Enter")
+    avgs.recommendation_label = avgs.recommendation_label.fillna("Not Recommended to Enter")
 
-    return predictions
+    return avgs
