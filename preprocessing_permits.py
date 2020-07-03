@@ -21,7 +21,7 @@ import wrangle as wr
 
 def get_permits_model_df():
     """
-    Docstring
+    Prep function used to actually read the data, apply column name changes, and sort values.
     """
 
     # calling wrangle_hud
@@ -63,9 +63,6 @@ def get_permits_model_df():
     df.sort_values(by=["city", "state", "year"], inplace=True)
 
     return df
-
-
-
 
 
 # ---------------------------------------- #
@@ -151,49 +148,16 @@ def calculate_evolution_index(df):
 
     return df
 
-#__clustering__#
+# ---------------- #
+#    Clustering    #
+# ---------------- #
 
-# average units per building & market share
-
-# def create_clusters(df):
-#     """
-#     This function creates clusters using average units per building & market share which calculated within.
-#     """
-
-#     # create market_share feature
-#     df['market_share'] = (df.total_high_density_value / df.market_volume)
-
-#     # scale the features
-
-#     # create object
-#     scaler = PowerTransformer(method="box-cox")
-#     # fit object
-#     scaler.fit(df[["avg_units_per_bldg", "market_share"]])
-#     # transform using object
-#     df[["avg_units_per_bldg", "market_share"]] = scaler.transform(df[["avg_units_per_bldg", "market_share"]])
-
-#     # define features for KMeans modeling
-#     X = df[["avg_units_per_bldg", "market_share"]]
-
-#     # cluster using k of 5
-
-#     # create object
-#     kmeans = KMeans(n_clusters=5, random_state=123)
-#     # fit object
-#     kmeans.fit(X)
-#     # predict using object
-#     df["cluster"] = kmeans.predict(X)
-
-#     # create centroids object
-#     centroids = pd.DataFrame(kmeans.cluster_centers_, columns=X.columns)
-
-#     return df, kmeans, centroids, scaler
-
-# average units per building & evolution index
 
 def create_clusters(df):
     """
     This function creates clusters using average units per building & evolution index.
+
+    Important to note the the ei and average units per building are returned scaled. This means that if these features will be used for modeling, or exploration purposes other than with clusters, the values need to be inversed scaled
     """
 
     # mask df to exclude 1997 (no prior year growth measures)
@@ -232,11 +196,13 @@ def create_clusters(df):
 
     return df, kmeans, centroids, scaler, scaled_ei_threshold_value, X
 
-#__main prep__#
+# ---------------- #
+#     Data Prep    #
+# ---------------- #
 
 def add_new_features(df):
     """
-    Docstring
+    Prep function that calls all the individual feature engineering funtions and applies them to the dataframe. 
     """
 
     # call feature engineering functions
@@ -289,7 +255,7 @@ def filter_top_cities_building_permits(df):
     
     return df
 
-def labeling_future_data(df):
+def labeling_future_data(df): ## Function used for the MVP ##
     """this function takes in a data frame and returns a boolean column that identifies
     if a city_state_year is a market that should be entered"""
     
@@ -323,10 +289,18 @@ def labeling_future_data(df):
     
     return df
 
+# ------------- #
+#   Splitting   #
+# ------------- #
+
 def split_data(df, train_size=.75,random_state = 124):
     train, test = train_test_split(df, train_size=train_size, random_state=random_state, stratify = df["should_enter"])
     train, validate = train_test_split(train, train_size=train_size, random_state=random_state, stratify = train["should_enter"])
     return train, validate, test
+
+# ------------- #
+#    Scaling    #
+# ------------- #
 
 def return_values(scaler, train, validate, test):
     '''
@@ -346,7 +320,51 @@ def min_max_scaler(train,validate, test):
     scaler, train_scaled, validate_scaled, test_scaled = return_values(scaler, train, validate, test)
     return scaler, train_scaled, validate_scaled, test_scaled
 
+# ----------------- #
+#    Add labels     #
+# ----------------- #
+
+def create_cluster_labels(df):
+    '''
+    Function used to add labels to the data. The function takes in a dataframe, calculates the clusters, and then applies the logic to add the labels to the data. 
+
+    The dataframe is return with the ie and the avg_units_per_bldg unscaled, so that it can be used for modeling.
+
+    '''
+    # bring clusters
+    df, kmeans, centroids, scaler, scaled_ei_threshold_value, X = create_clusters(df)
+
+    # Inverse scale the features so that they can later be used for modeling
+    df[["avg_units_per_bldg", "ei"]] = scaler.inverse_transform(df[["avg_units_per_bldg", "ei"]])
+
+    # When predicting a bool (emerging_market only)
+    df["test_future_cluster"] = (df.sort_values(["year"])
+                                .groupby(["city", "state"])[["cluster"]]
+                                .shift(-2))
+
+    df_emerging = (
+        df[((df.test_future_cluster == 3) | (df.test_future_cluster == 1)) 
+        & ((df.cluster == 4) | (df.cluster == 0))]
+    )
+
+    df_emerging["should_enter"] = True
+
+    df["should_enter"] = df_emerging.should_enter
+
+    df.should_enter = df.should_enter.fillna(False)
+
+    df = df.merge(centroids, how="left", left_on="cluster", right_on=centroids.index)
+
+    return df
+
+# ------------------------ #
+# Main Data Prep Functions #
+# ------------------------ #
+
 def prep_data_for_modeling_permits(df, features_for_modeling, label_feature):
+    '''
+    Function used to prepare the dataframe for modeling. It will read the data, take a list of features for modeling and split the data using the y as the label_feature
+    '''
 
     # To avoid Nan's, I have removed all data from 1997 (because all the var's would be nan)
     df_model = df[df.year > 1997]
@@ -381,7 +399,12 @@ def prep_data_for_modeling_permits(df, features_for_modeling, label_feature):
 
 def permits_preprocessing_mother_function(modeling=False, features_for_modeling = [], label_feature= " "):
     """
-    Docstring
+    Main preprocessing function. Has an argument that specifies if the function is being used for modeling or not. 
+
+    If modeling = False, then the function will acquire the data, add new features and filter for continuos cities.
+
+    If modeling = True, then in addition to the steps above, the function will also add labels, oversample the data, split the data and scale it. It will return a train, validate, test split. 
+    The function takes a list of features that will be used for modeling, as well as a label_feature, as a str, that will be used as the target variable.
     """
 
     if modeling == False:
