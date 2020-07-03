@@ -5,18 +5,16 @@ from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 from pprint import pprint 
 import pandas as pd
-import nltk
-import re
-import pandas as pd 
-from sklearn.linear_model import LogisticRegression
+
+
 from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import accuracy_score, precision_score, recall_score
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.tree import export_graphviz
+
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.naive_bayes import MultinomialNB
+
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -26,9 +24,9 @@ from sklearn.cluster import KMeans
 import preprocessing_permits as pr
 import numpy as np
 
-# ---------------------- #
-#        Modeling        #
-# ---------------------- #
+############################################################################################################
+#                                   Cross Validation Modeling                                              #
+############################################################################################################
 
 def run_decision_tree_cv(X_train, y_train):
     '''
@@ -133,9 +131,10 @@ def create_prediction(df, model):
     return y_pred
 
 
-##############
-# Evaluation #
-##############
+############################################################################################################
+#                                        Evaluations                                                       #
+############################################################################################################
+
 def create_report(y_train, y_pred):
     '''
     Helper function used to create a classification evaluation report, and return it as df
@@ -160,13 +159,11 @@ def accuracy_report(model, y_pred, y_train):
 
 
 ############################################################################################################
-
-                                        # Traditional Modeling #
-
+#                                        Traditional Modeling                                              #
 ############################################################################################################
 
 # ---------------------- #
-#        Modeling        #
+#        Models          #
 # ---------------------- #
 
 # Decision Tree
@@ -181,6 +178,9 @@ def run_clf(X_train, y_train, max_depth):
     return clf, y_pred
 
 def run_clf_loop(train_scaled, validate_scaled, y_validate, y_train, max_range):
+    '''
+    Function used to run through a loop, comparing each score at the different hyperparameters, to understand what is the best hyperparameter to use. Takes the scaled train and validate dfs, as well as the target train and validate df. Also takes a max range, for. the loop
+    '''
     for i in range(1, max_range):
         clf, y_pred = run_clf(train_scaled, y_train, i)
         score = clf.score(train_scaled, y_train)
@@ -190,6 +190,9 @@ def run_clf_loop(train_scaled, validate_scaled, y_validate, y_train, max_range):
         print(f"Max_depth = {i}, accuracy_score = {score:.2f}. validate_score = {validate_score:.2f}, recall = {recall_score:.2f}")
 
 def clf_feature_importances(clf, train_scaled):
+    '''
+    Function used to create a graph, which ranks the features based on which were more important for the modeling
+    '''
     coef = clf.feature_importances_
     # We want to check that the coef array has the same number of items as there are features in our X_train dataframe.
     assert(len(coef) == train_scaled.shape[1])
@@ -215,6 +218,9 @@ def run_knn(X_train, y_train, n_neighbors):
     return knn, y_pred
 
 def run_knn_loop(train_scaled, validate_scaled, y_validate, y_train, max_range):
+    '''
+    Function used to run through a loop, comparing each score at the different hyperparameters, to understand what is the best hyperparameter to use. Takes the scaled train and validate dfs, as well as the target train and validate df. Also takes a max range, for. the loop
+    '''
     for i in range(1, max_range):
         knn, y_pred = run_knn(train_scaled, y_train, i)
         score = knn.score(train_scaled, y_train)
@@ -235,6 +241,9 @@ def run_rf(X_train, y_train, leaf, max_depth):
     return rf, y_pred
 
 def run_rf_loop(train_scaled, validate_scaled, y_validate, y_train, max_range):
+    '''
+    Function used to run through a loop, comparing each score at the different hyperparameters, to understand what is the best hyperparameter to use. Takes the scaled train and validate dfs, as well as the target train and validate df. Also takes a max range, for. the loop
+    '''
     for i in range(1, max_range):
         rf, y_pred = run_rf(train_scaled, y_train, 1, i)
         score = rf.score(train_scaled, y_train)
@@ -244,6 +253,9 @@ def run_rf_loop(train_scaled, validate_scaled, y_validate, y_train, max_range):
         print(f"Max_depth = {i}, accuracy_score = {score:.2f}. validate_score = {validate_score:.2f}, recall = {recall_score:.2f}")
 
 def rf_feature_importance(rf, train_scaled):
+    '''
+    Function used to create a graph, which ranks the features based on which were more important for the modeling
+    '''
     coef = rf.feature_importances_
     columns = train_scaled.columns
     df = pd.DataFrame({"feature": columns,
@@ -254,19 +266,10 @@ def rf_feature_importance(rf, train_scaled):
     sns.barplot(data=df, x="feature_importance", y="feature", palette="Blues_d")
     plt.title("What are the most influencial features?")
 
-# Logistic Regression
 
-def run_lg(X_train, y_train):
-    '''
-    Function used to create and fit logistic regression models. Returns model and predictions.
-    '''
-    logit = LogisticRegression().fit(X_train, y_train)
-    y_pred = logit.predict(X_train)
-    return logit, y_pred
-
-# ------------------ #
-#    Predictions     #
-# ------------------ #
+############################################################################################################
+#                                        Predictions                                                       #
+############################################################################################################
 
 def prep_prediction_data():
     df = pr.permits_preprocessing_mother_function()
@@ -275,32 +278,6 @@ def prep_prediction_data():
     df, kmeans, centroids, scaler, scaled_ei_threshold_value, X = pr.create_clusters(df)
 
     df[["avg_units_per_bldg", "ei"]] = scaler.inverse_transform(df[["avg_units_per_bldg", "ei"]])
-
-    # # create object
-    # scaler = PowerTransformer()
-    # # fit object
-    # scaler.fit(df[["avg_units_per_bldg"]])
-    # # transform using object
-    # df["avg_units_per_bldg_scaled"] = scaler.transform(df[["avg_units_per_bldg"]])
-
-    # scaler = PowerTransformer()
-    # scaler.fit(df[["ei"]])
-    # # transform using object
-    # df["ei_scaled"] = scaler.transform(df[["ei"]])
-
-
-
-    # # define features for KMeans modeling
-    # X = df[["avg_units_per_bldg_scaled", "ei_scaled"]]
-
-    # # cluster using k of 6
-
-    # # create object
-    # kmeans = KMeans(n_clusters=6, random_state=123)
-    # # fit object
-    # kmeans.fit(X)
-    # # predict using object
-    # df["cluster"] = kmeans.predict(X)
 
     df = df.merge(centroids, how="left", left_on="cluster", right_on=centroids.index)
 
@@ -318,12 +295,6 @@ def min_max_scaler_prediction(df):
     return scaler, df_scaled
 
 def create_predictions_df(df, kmeans, knn):
-
-    ## Found a mistake - can't just create an average of an aver_units_per_bld. Need to bring in both variables, create the avg, and then calculate the new avg_units_per_bldg
-    # predictions = df[(df.year == 2018) | (df.year == 2019)].groupby("city_state")[["avg_units_per_bldg_x", "ei_x", "total_high_density_bldgs", "total_high_density_value"]].mean()
-
-    # predictions = df[(df.year == 2018) | (df.year == 2019)].groupby("city_state")[["total_high_density_units", "ei_x", "total_high_density_bldgs", "total_high_density_value"]].mean()
-    # predictions["avg_units_per_bldg"] = predictions["total_high_density_units"] / predictions["total_high_density_bldgs"]
 
     # create 2018 & 2019 masked DataFrame
     predictions = df[(df.year == 2018) | (df.year == 2019)]
