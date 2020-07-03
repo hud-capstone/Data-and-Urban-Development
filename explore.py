@@ -137,7 +137,7 @@ def visualize_clusters(df, centroids, scaled_ei_threshold_value):
         marker="x",
         s=1000,
         ax=plt.gca(),
-        label="centriod",
+        label="centroid",
     )
 
     plt.axhline(y=scaled_ei_threshold_value, color="r", linestyle='-', label="EI Threshold")
@@ -391,7 +391,7 @@ def get_stat_test_results(stat, pvalue, alpha):
         print("Fail to reject null hypothesis")
 
 
-def rep_v_est_difference(df):
+def high_density_rep_v_est_difference(df):
     """
     This function calculates the difference between the report and estimated numbers for the metrics relevant to
     our analysis.
