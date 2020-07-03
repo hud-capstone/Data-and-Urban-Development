@@ -477,7 +477,7 @@ def growth_rate_dist_comboplot(df):
     plt.ylabel("Growth Rate (%)")
 
     # multiply yticks by one hundred for better labels
-    ylabels = ['{:.0f}'.format(x) + '%' for x in bp.get_yticks() * 100]
+    ylabels = ["{}".format(x) + "%" for x in bp.get_yticks()]
     bp.set_yticklabels(ylabels)
     plt.show()
             
@@ -487,7 +487,7 @@ def mkt_value_dist_boxplot(df):
     """
     
     bp = sns.boxplot(data=df, x="cluster", y="market_volume")
-    plt.title("What is the distribution of market valuation for each cluster?")
+    plt.title("What does the distribution of the greater U.S. market valuation as a whole look like for each cluster?")
     plt.xlabel("Cluster")
     plt.ylabel("Market Valuation")
 
