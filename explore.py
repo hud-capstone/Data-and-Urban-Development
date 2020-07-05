@@ -189,25 +189,9 @@ def plot_inertia(X):
 #  Clustering Exploration  #
 # ------------------------ #
 
-def growth_rate_dist_comboplot(df):
-    """
-    This function creates a visualization illstrating the distribution of the growth rates for each cluster. 
-    """
-    
-    bp = sns.boxplot(data=df, x="cluster", y="city_state_high_density_value_delta_pct")
-    sns.swarmplot(data=df, x="cluster", y="city_state_high_density_value_delta_pct", alpha=.5)
-    plt.title("What is the distribution of specific market growth rates for each cluster?")
-    plt.xlabel("Cluster")
-    plt.ylabel("Growth Rate (%)")
-
-    # multiply yticks by one hundred for better labels
-    ylabels = ["{}".format(x) + "%" for x in bp.get_yticks()]
-    bp.set_yticklabels(ylabels)
-    plt.show()
-            
 def mkt_value_dist_boxplot(df):
     """
-    This function creates a visualization illstrating the distribution of the total market valuation for each cluster.
+    This function creates a visualization illstrating the distribution of the the greater U.S. market valuation for each cluster.
     """
     
     bp = sns.boxplot(data=df, x="cluster", y="market_volume")
@@ -218,33 +202,6 @@ def mkt_value_dist_boxplot(df):
     # divide yticks by one billion for better labels
     ylabels = ['{:.0f}'.format(x) + 'B' for x in bp.get_yticks() / 1000000000]
     bp.set_yticklabels(ylabels)
-    plt.show()
-
-def unit_dist_boxplot(df):
-    """
-    This function creates a visualization illstrating the distribution of the total units for each cluster.
-    """
-    
-    bp = sns.boxplot(data=df, x="cluster", y="total_high_density_units")
-    plt.title("What is the distribution of high-density units for each cluster?")
-    plt.xlabel("Cluster")
-    plt.ylabel("High-Density Units")
-
-    # divide yticks by one thousand for better labels
-    ylabels = ['{:.0f}'.format(x) + 'K' for x in bp.get_yticks() / 1000]
-    bp.set_yticklabels(ylabels)
-    plt.show()
-
-def ei_dist_comboplot(df):
-    """
-    This function creates a visualization illstrating the distribution of the evolution index for each cluster. 
-    """
-    
-    sns.boxplot(data=df, x="cluster", y="ei")
-    sns.swarmplot(data=df, x="cluster", y="ei", alpha=.5)
-    plt.title("What is the distribution of the evolution index for each cluster?")
-    plt.xlabel("Cluster")
-    plt.ylabel("Evolution Index")
     plt.show()
 
 def us_mkt_growth_dist_boxplot(df):
@@ -262,8 +219,97 @@ def us_mkt_growth_dist_boxplot(df):
     bp.set_yticklabels(ylabels)
     plt.show()
 
+def unique_mkt_value_dist_boxplot(df):
+    """
+    This function creates a visualization illstrating the distribution of the market valuation for each cluster. 
+    """
 
+    bp = sns.boxplot(data=df, x="cluster", y="total_high_density_value")
+    plt.title("What is the distribution of the market valuation for each cluster?")
+    plt.xlabel("Cluster")
+    plt.ylabel("Market Valuation")
 
+    # divide yticks by one billion for better labels
+    ylabels = ['{:.0f}'.format(x) + 'B' for x in bp.get_yticks() / 1000000000]
+    bp.set_yticklabels(ylabels)
+    plt.show()
+
+def growth_rate_dist_comboplot(df):
+    """
+    This function creates a visualization illstrating the distribution of the market growth rates for each cluster. 
+    """
+    
+    bp = sns.boxplot(data=df, x="cluster", y="city_state_high_density_value_delta_pct")
+    sns.swarmplot(data=df, x="cluster", y="city_state_high_density_value_delta_pct", alpha=.5)
+    plt.title("What is the distribution of specific market growth rates for each cluster?")
+    plt.xlabel("Cluster")
+    plt.ylabel("Growth Rate (%)")
+
+    # multiply yticks by one hundred for better labels
+    ylabels = ["{}".format(x) + "%" for x in bp.get_yticks()]
+    bp.set_yticklabels(ylabels)
+    plt.show()
+
+def ei_dist_comboplot(df):
+    """
+    This function creates a visualization illstrating the distribution of the evolution index for each cluster. 
+    """
+    
+    sns.boxplot(data=df, x="cluster", y="ei")
+    sns.swarmplot(data=df, x="cluster", y="ei", alpha=.5)
+    plt.title("What is the distribution of the evolution index for each cluster?")
+    plt.xlabel("Cluster")
+    plt.ylabel("Evolution Index")
+    plt.show()
+
+def unit_dist_boxplot(df):
+    """
+    This function creates a visualization illstrating the distribution of the total units for each cluster.
+    """
+    
+    bp = sns.boxplot(data=df, x="cluster", y="total_high_density_units")
+    plt.title("What is the distribution of high-density units for each cluster?")
+    plt.xlabel("Cluster")
+    plt.ylabel("High-Density Units")
+
+    # divide yticks by one thousand for better labels
+    ylabels = ['{:.0f}'.format(x) + 'K' for x in bp.get_yticks() / 1000]
+    bp.set_yticklabels(ylabels)
+    plt.show()
+
+def building_dist_boxplot(df):
+    """
+    This function creates a visualization illstrating the distribution of the total buildings for each cluster.
+    """
+    
+    sns.boxplot(data=df, x="cluster", y="total_high_density_bldgs")
+    plt.title("What is the distribution of high-density buildings for each cluster?")
+    plt.xlabel("Cluster")
+    plt.ylabel("High-Density Buildings")
+    plt.show()
+
+def regression_pairplot(df):
+    """
+    This function creates a regression pairplot of the specified variables.
+    """
+
+    sns.pairplot(
+        data=df,
+        vars=[
+            "total_high_density_bldgs",
+            "total_high_density_units",
+            "total_high_density_value",
+            "city_state_high_density_value_delta_pct",
+            "market_volume",
+            "market_volume_delta_pct",
+            "ei",
+        ],
+        kind="reg",
+        plot_kws={"line_kws": {"color": sns.color_palette("colorblind")[4]}},
+        corner=True,
+    )
+    plt.suptitle("Regression Pairplot of Numeric Variables")
+    plt.show()
 
 # --------------------- # 
 #  Statistical Testing  #
