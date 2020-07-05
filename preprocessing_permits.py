@@ -357,6 +357,34 @@ def create_cluster_labels(df):
 
     return df
 
+def create_model_labels(df, centroids):
+    '''
+    Function used to add labels to the data. The function takes in a dataframe, calculates the clusters, and then applies the logic to add the labels to the data. 
+
+    The dataframe is return with the ie and the avg_units_per_bldg unscaled, so that it can be used for modeling.
+
+    '''
+
+    # When predicting a bool (emerging_market only)
+    df["test_future_cluster"] = (df.sort_values(["year"])
+                                .groupby(["city", "state"])[["cluster"]]
+                                .shift(-2))
+
+    df_emerging = (
+        df[((df.test_future_cluster == 3) | (df.test_future_cluster == 1)) 
+        & ((df.cluster == 4) | (df.cluster == 0))]
+    )
+
+    df_emerging["should_enter"] = True
+
+    df["should_enter"] = df_emerging.should_enter
+
+    df.should_enter = df.should_enter.fillna(False)
+
+    df = df.merge(centroids, how="left", left_on="cluster", right_on=centroids.index)
+
+    return df
+
 # ------------------------ #
 # Main Data Prep Functions #
 # ------------------------ #
