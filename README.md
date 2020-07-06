@@ -143,14 +143,49 @@ Functions help make program writing easier because they can store a whole block 
 
 Now that you know what a function is, it helps to learn a little about how to read them (in Python, at least).  Though they vary considerably in scope, Python functions read pretty much the same way; the best way to to explain this is to take a look at one:
 
-<span style="color:blue">def function_name(parameters):</span><br/>
-><span style="color:purple">"""Explain what the function does in plain English"""</span><br/>
-><span style="color:green">a code block</span><br/>
-><span style="color:green">describing the</span><br/>
-><span style="color:green">function's job</span><br/>
-><span style="color:red">return value</span><br/>
 
-The first line in blue is the 'function header' - it's what you want to name the function.  Inside its parentheses are the parameters that give the function the information it needs to run.  The description in purple describes the function to other code readers, and the code block in green is the actual code you want the function to execute.  Finally, the red 'return' line is the value you get back after the function does its job.
+<div class="text-blue mb-2">
+  def function_name(parameter):
+</div>
+<div class="text-gray-dark mb-2">
+  .text-gray-dark on white
+</div>
+<div class="text-gray mb-2">
+  .text-gray on white
+</div>
+<div class="text-red mb-2">
+  .text-red on white
+</div>
+<div class="text-orange mb-2">
+  .text-orange on white
+</div>
+<span class="float-left text-red tooltipped tooltipped-n" aria-label="Does not meet accessibility standards"><%= octicon("alert") %></span>
+<div class="text-orange-light mb-2">
+  .text-orange-light on white
+</div>
+<span class="float-left text-red tooltipped tooltipped-n" aria-label="Does not meet accessibility standards"><%= octicon("alert") %></span>
+<div class="text-green mb-2 ml-4">
+  .text-green on white
+</div>
+<div class="text-purple mb-2">
+  .text-purple on white
+</div>
+
+<div class="text-blue mb-2">
+  def function_name(parameters):
+</div>
+<div class="text-purple mb-2">
+  """Easy-to-read description of what the function does"""
+</div>
+<div class="text-gray mb-2">
+  block of code 
+  you want run
+</div>
+<div class="text-red mb-2">
+  value you want retuned
+</div>
+
+The first line in blue is the 'function header' - it's what you want to name the function.  Inside its parentheses are the parameters that give the function the information it needs to run.  The description in purple describes the function to other code readers, and the code block in gray is the actual code you want the function to execute.  Finally, the red 'return' line is the value you get back after the function does its job.
 
 Contained within our '.py' files are the unique and powerful functions that carry out tasks like cleaning and preparing the data.  Even though they are only mentioned in the Final Notebook as imports, it is recommended you visit the actual files themselves to gain a true appreciation for the labor involved.
 
