@@ -36,7 +36,7 @@ That is the essence of GitHub: a cloud platform where people can view software d
 
 **4.) Working with This Repo**
 
->To work with the following information, you must first clone this repository.  In doing so, you are grabbing a full copy of our work and putting it on your computer for analysis.  Instructions for doing so can be found [here.](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository
+>To work with the following information, you must first clone this repository.  In doing so, you are grabbing a full copy of our work and putting it on your computer for analysis.  Instructions for doing so can be found [here.](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository)
 
 **___________________________________________________________________________________________________________________________________**
 
@@ -247,7 +247,7 @@ It was from this K-Nearest Neighbors clustering algorithm that we were able to d
 
 **___________________________________________________________________________________________________________________________________**
 
-## Exploring the Data - 
+## Exploring the Data
 
 Now that the data is cleaned and split, we can start playing with the training data: finding correlations, types of distributions, and various relationships between the different features.  For this dataset, an example exploration question is "How many 'total_high_density_units' were in the 'city' of Abilene, TX in the 'year' 2001?"  the values 'total_high_density_units,' 'city,' and 'year' are all features (columns) in the cleaned DataFrame.
 
