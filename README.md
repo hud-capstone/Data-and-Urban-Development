@@ -143,14 +143,17 @@ Functions help make program writing easier because they can store a whole block 
 
 Now that you know what a function is, it helps to learn a little about how to read them (in Python, at least).  Though they vary considerably in scope, Python functions read pretty much the same way; the best way to to explain this is to take a look at one:
 
-<span style="color:blue">def function_name(parameters):</span><br/>
-><span style="color:purple">"""Explain what the function does in plain English"""</span><br/>
-><span style="color:green">a code block</span><br/>
-><span style="color:green">describing the</span><br/>
-><span style="color:green">function's job</span><br/>
-><span style="color:red">return value</span><br/>
+```python
+def function_name(parameters):
+    """Easy-to-read description of what the function does"""
+    block of code 
+    you want your
+    function to run
 
-The first line in blue is the 'function header' - it's what you want to name the function.  Inside its parentheses are the parameters that give the function the information it needs to run.  The description in purple describes the function to other code readers, and the code block in green is the actual code you want the function to execute.  Finally, the red 'return' line is the value you get back after the function does its job.
+    value you want the function to return
+```
+
+The first line is the 'function header' - it's what you want to name the function.  Inside its parentheses are the parameters that give the function the information it needs to run.  The description in triple quotes describes the function to other code readers, and the code block underneath it is the actual code you want the function to execute.  Finally, the last line (with 'return' in red) is the value you get back after the function does its job.
 
 Contained within our '.py' files are the unique and powerful functions that carry out tasks like cleaning and preparing the data.  Even though they are only mentioned in the Final Notebook as imports, it is recommended you visit the actual files themselves to gain a true appreciation for the labor involved.
 
