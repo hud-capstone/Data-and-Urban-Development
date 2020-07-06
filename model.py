@@ -227,7 +227,7 @@ def run_knn_loop(train_scaled, validate_scaled, y_validate, y_train, max_range):
         validate_score = knn.score(validate_scaled, y_validate)
         _, _, report = accuracy_report(knn, y_pred, y_train)
         recall_score = report["True"].recall
-        print(f"Max_depth = {i}, accuracy_score = {score:.2f}. validate_score = {validate_score:.2f}, recall = {recall_score:.2f}")
+        print(f"k_n = {i}, accuracy_score = {score:.2f}. validate_score = {validate_score:.2f}, recall = {recall_score:.2f}")
 
 
 # Random_forest
@@ -383,3 +383,28 @@ def create_predictions_df(df, kmeans, knn):
     avgs.recommendation_label = avgs.recommendation_label.fillna("Not Recommended to Enter")
 
     return avgs
+
+def print_predictions_value_emerging(df):
+    high = df[(df.cluster == 1) | (df.cluster == 3)].total_high_density_value.mean()
+    low = df[(df.cluster == 0) | (df.cluster == 4)].total_high_density_value.mean()
+    medium = df[(df.cluster == 2) | (df.cluster == 5)].total_high_density_value.mean()
+
+    print(f"We expect emergig markets to increase, on average, by {(high - low) / low:.0%} over the next two years")
+    print(f"We expect emergig markets to increase, on average, by ${(high - low):,.0f} over the next two years")
+
+def print_predictions_value_medium(df):
+    high = df[(df.cluster == 1) | (df.cluster == 3)].total_high_density_value.mean()
+    low = df[(df.cluster == 0) | (df.cluster == 4)].total_high_density_value.mean()
+    medium = df[(df.cluster == 2) | (df.cluster == 5)].total_high_density_value.mean()
+
+    print(f"We expect medium markets to increase their investment, on average, by {(high - medium) / medium:.0%}")
+    print(f"We expect medium markets to increase their investment, on average, by ${(high - medium):,.0f}")
+
+def print_predictions_value_declining(df):
+    high = df[(df.cluster == 1) | (df.cluster == 3)].total_high_density_value.mean()
+    low = df[(df.cluster == 0) | (df.cluster == 4)].total_high_density_value.mean()
+    medium = df[(df.cluster == 2) | (df.cluster == 5)].total_high_density_value.mean()
+
+    print(f"We expect declining markets to decrease their investment, on average, by {(low - high) / high:.0%}")
+    print(f"We expect declining markets to decrease their investment, on average, by ${(low - high):,.0f}")
+
