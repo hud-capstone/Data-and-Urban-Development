@@ -288,22 +288,14 @@ def building_dist_boxplot(df):
     plt.ylabel("High-Density Buildings")
     plt.show()
 
-def regression_pairplot(df):
+def regression_pairplot(df, variables=["total_high_density_bldgs", "total_high_density_units", "total_high_density_value", "city_state_high_density_value_delta_pct", "market_volume", "market_volume_delta_pct", "ei"]):
     """
     This function creates a regression pairplot of the specified variables.
     """
 
     sns.pairplot(
         data=df,
-        vars=[
-            "total_high_density_bldgs",
-            "total_high_density_units",
-            "total_high_density_value",
-            "city_state_high_density_value_delta_pct",
-            "market_volume",
-            "market_volume_delta_pct",
-            "ei",
-        ],
+        vars=variables,
         kind="reg",
         plot_kws={"line_kws": {"color": sns.color_palette("colorblind")[4]}},
         corner=True,
