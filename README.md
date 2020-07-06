@@ -153,7 +153,7 @@ def function_name(parameters):
     value you want the function to return
 ```
 
-The first line in blue is the 'function header' - it's what you want to name the function.  Inside its parentheses are the parameters that give the function the information it needs to run.  The description in purple describes the function to other code readers, and the code block in gray is the actual code you want the function to execute.  Finally, the red 'return' line is the value you get back after the function does its job.
+The first line is the 'function header' - it's what you want to name the function.  Inside its parentheses are the parameters that give the function the information it needs to run.  The description in triple quotes describes the function to other code readers, and the code block underneath it is the actual code you want the function to execute.  Finally, the last line (with 'return' in red) is the value you get back after the function does its job.
 
 Contained within our '.py' files are the unique and powerful functions that carry out tasks like cleaning and preparing the data.  Even though they are only mentioned in the Final Notebook as imports, it is recommended you visit the actual files themselves to gain a true appreciation for the labor involved.
 
