@@ -143,19 +143,15 @@ Functions help make program writing easier because they can store a whole block 
 
 Now that you know what a function is, it helps to learn a little about how to read them (in Python, at least).  Though they vary considerably in scope, Python functions read pretty much the same way; the best way to to explain this is to take a look at one:
 
-<div class="text-blue mb-2">
-  def function_name(parameters):
-</div>
-<div class="text-purple mb-2">
-  """Easy-to-read description of what the function does"""
-</div>
-<div class="text-gray mb-2">
-  block of code 
-  you want run
-</div>
-<div class="text-red mb-2">
-  value you want retuned
-</div>
+```python
+def function_name(parameters):
+    """Easy-to-read description of what the function does"""
+    block of code 
+    you want your
+    function to run
+
+    value you want the function to return
+```
 
 The first line in blue is the 'function header' - it's what you want to name the function.  Inside its parentheses are the parameters that give the function the information it needs to run.  The description in purple describes the function to other code readers, and the code block in gray is the actual code you want the function to execute.  Finally, the red 'return' line is the value you get back after the function does its job.
 
