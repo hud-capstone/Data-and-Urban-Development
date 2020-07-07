@@ -8,6 +8,24 @@ We worked with our stakeholder, TestFit.io (description follows) to find out whi
 
 **___________________________________________________________________________________________________________________________________**
 
+## How to Read Our Work
+
+We have divided our work into three folders, to make it easier for readers to find the files they are looking for. 
+
+**1.) final_project**
+
+This folder houses our final report, with all of our findings, exploration and modeling. Here you will also find all of the py files needed to reproduce our work. 
+
+**2.) mvp_folder**
+
+This folder houses our "minimum viable product". Here you will find our initial round of exploration, analysis and modeling.
+
+**3.) additiional_reference_notebooks**
+
+Finally, this folder houses our individal notebooks, which were used to create the final notebook, as well as additional analysis, and a lot of testing for the functions we used throught our project.
+
+**___________________________________________________________________________________________________________________________________**
+
 ## On Reproducibility
 
 Our findings are reproducible for peer review.  To do so, however, requires a few things that must be done beforehand.
