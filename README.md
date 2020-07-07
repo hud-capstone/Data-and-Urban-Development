@@ -20,7 +20,7 @@ This folder houses our final report, with all of our findings, exploration and m
 
 This folder houses our "minimum viable product". Here you will find our initial round of exploration, analysis and modeling.
 
-**3.) additiional_reference_notebooks**
+**3.) additional_reference_notebooks**
 
 Finally, this folder houses our individal notebooks, which were used to create the final notebook, as well as additional analysis, and a lot of testing for the functions we used throught our project.
 
