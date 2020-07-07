@@ -200,7 +200,7 @@ def mkt_value_dist_boxplot(df):
     plt.ylabel("Market Valuation")
 
     # divide yticks by one billion for better labels
-    ylabels = ['{:.0f}'.format(x) + 'B' for x in bp.get_yticks() / 1000000000]
+    ylabels = ['${:.0f}'.format(x) + 'B' for x in bp.get_yticks() / 1000000000]
     bp.set_yticklabels(ylabels)
     plt.show()
 
@@ -230,7 +230,7 @@ def unique_mkt_value_dist_boxplot(df):
     plt.ylabel("Market Valuation")
 
     # divide yticks by one billion for better labels
-    ylabels = ['{:.0f}'.format(x) + 'B' for x in bp.get_yticks() / 1000000000]
+    ylabels = ['${:.0f}'.format(x) + 'B' for x in bp.get_yticks() / 1000000000]
     bp.set_yticklabels(ylabels)
     plt.show()
 
@@ -462,13 +462,13 @@ def high_density_rep_v_est_difference(df):
         * 100
     )
 
-    print(f"""There is an {abs_diff_buildings:.2f}% difference between the reported and estimated total number of high-density, multifamily buildings 
-    in the dataset.""")
+    print(f"""There is an {abs_diff_buildings:.2f}% absolute difference between the reported and estimated total number of high-density, multifamily 
+    buildings in the dataset.""")
     print()
-    print(f"""There is an {abs_diff_units:.2f}% difference between the reported and estimated total number of high-density, multifamily units in 
-    the dataset.""")
+    print(f"""There is an {abs_diff_units:.2f}% absolute difference between the reported and estimated total number of high-density, multifamily 
+    units in the dataset.""")
     print()
-    print(f"""There is an {abs_diff_value:.2f}% difference between the reported and estimated total valuation of high-density, multifamily 
+    print(f"""There is an {abs_diff_value:.2f}% absolute difference between the reported and estimated total valuation of high-density, multifamily 
     structures in the dataset.""")
 
 
