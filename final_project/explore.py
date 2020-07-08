@@ -480,9 +480,9 @@ def create_prediction_graph(predictions):
     '''
     This function is used to create a barplot that visualizes the number of cities within our sub category predictions
     '''
-    plt.figure(figsize=(15,5))
+    # plt.figure(figsize=(15,5))
     sns.countplot(data=predictions, x="recommendation_label")
-    plt.title("Number of cities within each sub")
+    plt.title("How many cities are found within each subcategory from our predictions?")
 
     plt.text(
         0,
@@ -520,3 +520,5 @@ def create_prediction_graph(predictions):
         ha ="center"
     )
 
+    plt.xlabel("Recommendation Label")
+    plt.ylabel("Count")
