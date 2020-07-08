@@ -42,6 +42,8 @@ Our findings are reproducible for peer review.  To do so, however, requires a fe
 
 **3.) GitHub**
 
+![2302D590-DC57-461E-A045-DFF17CB1F382_4_5005_c](https://user-images.githubusercontent.com/60628760/86941639-c740ca80-c109-11ea-96cb-a06057b70eb3.jpeg)
+
 > [GitHub](https://github.com/) is an online version-control platform that provides hosting services for software development.  Each repository is a publicly accessible file from which users can pull information and see the development of a program at various points in its evolution.
 
 To those unfamiliar with the jargon-heavy vocabulary of programming, think of baking a pie for friends.  
