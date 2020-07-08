@@ -40,7 +40,7 @@ Our findings are reproducible for peer review.  To do so, however, requires a fe
 
 >Our chosen code devlepment environment for this project is Jupyter Notebook, an open-source web application that allows you to create and share documents.  In it, the user can perform all phases of the Data Science Pipeline, from Data Acquisition through to Modeling and takeaways made.  As with Python, you can check the version on your machine in the command line with ```jupyter notebook```; if it's not found, you can download [Anaconda](https://www.anaconda.com/products/individual) to install their complete line of offerings, of which Jupyter Notebook is one. 
 
-**3.) GitHub** ![2302D590-DC57-461E-A045-DFF17CB1F382_4_5005_c](https://user-images.githubusercontent.com/60628760/86941639-c740ca80-c109-11ea-96cb-a06057b70eb3.jpeg)
+**3.)** [2302D590-DC57-461E-A045-DFF17CB1F382_4_5005_c](https://user-images.githubusercontent.com/60628760/86941639-c740ca80-c109-11ea-96cb-a06057b70eb3.jpeg)
 
 > [GitHub](https://github.com/) is an online version-control platform that provides hosting services for software development.  Each repository is a publicly accessible file from which users can pull information and see the development of a program at various points in its evolution.
 
