@@ -138,6 +138,8 @@ def create_predictions_loop(target_variable, unique_city_states):
         
     return results
 
+
+
 # ---------------- #
 #     Evaluate     #
 # ---------------- # 
