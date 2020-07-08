@@ -30,15 +30,22 @@ Finally, this folder houses our individal notebooks, which were used to create t
 
 Our findings are reproducible for peer review.  To do so, however, requires a few things that must be done beforehand.
 
+![08E64612-4621-4D6E-8131-98A1097F4B8E_4_5005_c](https://user-images.githubusercontent.com/60628760/86941443-8f398780-c109-11ea-977d-7cba2eaf98c0.jpeg)
+
 **1.) Installation of Python and Its Associated Libraries**
 
 >All work for this project is performed using Python, specifically version 3.7 (or later).  To check which version you have on your computer, simply go to your command line and type ```python --version```.  If it's not installed on your computer, [Python](https://www.python.org) has an easy to follow menu for installation across Mac, Windows, and other various platforms.
 
->Once python is situated on your machine, simply importing its associated libraries (matplotlib, sklearn, and others) into your working environment will allow you to see and manipulate the data in just about every way imaginable.  
+>Once python is situated on your machine, simply importing its associated libraries (matplotlib, sklearn, and others) into your working environment will allow you to see and manipulate the data in just about every way imaginable. 
+
+
+![D30762B5-622F-42C1-8D3B-8DB271825156_4_5005_c](https://user-images.githubusercontent.com/60628760/86941546-b001dd00-c109-11ea-822e-1fc3d56e0043.jpeg)
 
 **2.) Jupyter Notebook**
 
 >Our chosen code devlepment environment for this project is Jupyter Notebook, an open-source web application that allows you to create and share documents.  In it, the user can perform all phases of the Data Science Pipeline, from Data Acquisition through to Modeling and takeaways made.  As with Python, you can check the version on your machine in the command line with ```jupyter notebook```; if it's not found, you can download [Anaconda](https://www.anaconda.com/products/individual) to install their complete line of offerings, of which Jupyter Notebook is one. 
+
+![2302D590-DC57-461E-A045-DFF17CB1F382_4_5005_c](https://user-images.githubusercontent.com/60628760/86941639-c740ca80-c109-11ea-96cb-a06057b70eb3.jpeg)
 
 **3.) Github**
 
