@@ -22,6 +22,8 @@ from fbprophet.diagnostics import performance_metrics
 from fbprophet.plot import plot_cross_validation_metric
 from fbprophet.plot import plot_forecast_component
 
+import model
+
 
 def create_predictions_df(train, validate, target_variable):
 
@@ -106,6 +108,35 @@ def run_all_models(train, validate, target_variable, rolling_period, exponential
     predictions["holts_prediction"] = y_pred
     
     return predictions
+
+def create_predictions_loop(target_variable, unique_city_states):
+    # Going to need to create a loop, and create an average rmse score to see which one would be best
+
+    results = pd.DataFrame()
+    updates = 0
+    for i in unique_city_states:
+        # read data and create dataframe
+        df, kmeans = model.prep_prediction_data()
+        df["city_state"] = df.city + "_" + df.state
+        modeling_df = df[df.city_state == i]
+        
+        # Create new dataframes
+        modeling_df = modeling_df[["year", "city_state", target_variable]]
+        modeling_df.year = pd.to_datetime(modeling_df.year, format = '%Y')
+        modeling_df = modeling_df.set_index("year")
+        # Split our data
+        train = modeling_df[:"2015"]
+        validate = modeling_df["2016":"2017"]
+        test = modeling_df["2018":]
+        # Model
+        predictions = run_all_models(train, validate, target_variable, rolling_period = [1, 2, 3])
+        # Evaluate
+        rmse = predictions.apply(lambda col: sqrt(sklearn.metrics.mean_squared_error(predictions.actual, col)))
+        rmse = pd.DataFrame(rmse, columns=[i])
+        
+        results = pd.concat([rmse, results], axis = 1)
+        
+    return results
 
 # ---------------- #
 #     Evaluate     #
