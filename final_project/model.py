@@ -389,8 +389,8 @@ def print_predictions_value_emerging(df):
     low = df[(df.cluster == 0) | (df.cluster == 4)].total_high_density_value.mean()
     medium = df[(df.cluster == 2) | (df.cluster == 5)].total_high_density_value.mean()
 
-    print(f"We expect emergig markets to increase, on average, by {(high - low) / low:.0%} over the next two years")
-    print(f"We expect emergig markets to increase, on average, by ${(high - low):,.0f} over the next two years")
+    print(f"We expect emerging markets to increase, on average, by {(high - low) / low:.0%} over the next two years")
+    print(f"We expect emerging markets to increase, on average, by ${(high - low):,.0f} over the next two years")
 
 def print_predictions_value_medium(df):
     high = df[(df.cluster == 1) | (df.cluster == 3)].total_high_density_value.mean()
