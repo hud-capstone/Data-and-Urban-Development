@@ -30,11 +30,11 @@ Finally, this folder houses our individal notebooks, which were used to create t
 
 Our findings are reproducible for peer review.  To do so, however, requires a few things that must be done beforehand.
 
-**1.) Installation of Python and Its Associated Libraries**![08E64612-4621-4D6E-8131-98A1097F4B8E_4_5005_c](https://user-images.githubusercontent.com/60628760/86941443-8f398780-c109-11ea-977d-7cba2eaf98c0.jpeg)
+**1.) Python**![08E64612-4621-4D6E-8131-98A1097F4B8E_4_5005_c](https://user-images.githubusercontent.com/60628760/86941443-8f398780-c109-11ea-977d-7cba2eaf98c0.jpeg)
 
 >All work for this project is performed using Python, specifically version 3.7 (or later).  To check which version you have on your computer, simply go to your command line and type ```python --version```.  If it's not installed on your computer, [Python](https://www.python.org) has an easy to follow menu for installation across Mac, Windows, and other various platforms.
 
->Once python is situated on your machine, simply importing its associated libraries (matplotlib, sklearn, and others) into your working environment will allow you to see and manipulate the data in just about every way imaginable. 
+>One of the reasons Python was selected and is gaining popularity in Data Science is its vast wealth of powerful data libraries at the programmer's disposal.  With a simple 'import' statement, one can run highly complex mathematical equations (with 'sklearn') or visualize their findings in great detail (with 'seaborn').
 
 
 **2.) Jupyter Notebook**![D30762B5-622F-42C1-8D3B-8DB271825156_4_5005_c](https://user-images.githubusercontent.com/60628760/86941546-b001dd00-c109-11ea-822e-1fc3d56e0043.jpeg)
@@ -213,7 +213,7 @@ Thanks to our aforementioned functions, we were able to filter all the original 
 
 **___________________________________________________________________________________________________________________________________**
 
-## Preparing the Data ![missing_values-1](https://user-images.githubusercontent.com/60628760/87034884-2526ee00-c1ae-11ea-92e5-924e058d65e0.jpeg)
+## Preparing the Data![close-up-texture-of-a-white-jigsaw-puzzle-in-assembled-state-with-missing-elements-forming-a-blue-pad_t20_WxKR61-570x350](https://user-images.githubusercontent.com/60628760/87037538-fb6fc600-c1b1-11ea-899b-d30b21dcb955.jpeg)
 
 "Give me six hours to chop down a tree, and I'll spend the first hour sharpening the axe." - *Abe Lincoln*
 
