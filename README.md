@@ -30,24 +30,19 @@ Finally, this folder houses our individal notebooks, which were used to create t
 
 Our findings are reproducible for peer review.  To do so, however, requires a few things that must be done beforehand.
 
-![08E64612-4621-4D6E-8131-98A1097F4B8E_4_5005_c](https://user-images.githubusercontent.com/60628760/86941443-8f398780-c109-11ea-977d-7cba2eaf98c0.jpeg)
-
-**1.) Installation of Python and Its Associated Libraries**
+**1.) Installation of Python and Its Associated Libraries**![08E64612-4621-4D6E-8131-98A1097F4B8E_4_5005_c](https://user-images.githubusercontent.com/60628760/86941443-8f398780-c109-11ea-977d-7cba2eaf98c0.jpeg)
 
 >All work for this project is performed using Python, specifically version 3.7 (or later).  To check which version you have on your computer, simply go to your command line and type ```python --version```.  If it's not installed on your computer, [Python](https://www.python.org) has an easy to follow menu for installation across Mac, Windows, and other various platforms.
 
 >Once python is situated on your machine, simply importing its associated libraries (matplotlib, sklearn, and others) into your working environment will allow you to see and manipulate the data in just about every way imaginable. 
 
 
-![D30762B5-622F-42C1-8D3B-8DB271825156_4_5005_c](https://user-images.githubusercontent.com/60628760/86941546-b001dd00-c109-11ea-822e-1fc3d56e0043.jpeg)
+**2.) Jupyter Notebook**![D30762B5-622F-42C1-8D3B-8DB271825156_4_5005_c](https://user-images.githubusercontent.com/60628760/86941546-b001dd00-c109-11ea-822e-1fc3d56e0043.jpeg)
 
-**2.) Jupyter Notebook**
 
 >Our chosen code devlepment environment for this project is Jupyter Notebook, an open-source web application that allows you to create and share documents.  In it, the user can perform all phases of the Data Science Pipeline, from Data Acquisition through to Modeling and takeaways made.  As with Python, you can check the version on your machine in the command line with ```jupyter notebook```; if it's not found, you can download [Anaconda](https://www.anaconda.com/products/individual) to install their complete line of offerings, of which Jupyter Notebook is one. 
 
-![2302D590-DC57-461E-A045-DFF17CB1F382_4_5005_c](https://user-images.githubusercontent.com/60628760/86941639-c740ca80-c109-11ea-96cb-a06057b70eb3.jpeg)
-
-**3.) Github**
+**3.) Github**![2302D590-DC57-461E-A045-DFF17CB1F382_4_5005_c](https://user-images.githubusercontent.com/60628760/86941639-c740ca80-c109-11ea-96cb-a06057b70eb3.jpeg)
 
 > [GitHub](https://github.com/) is an online version-control platform that provides hosting services for software development.  Each repository is a publicly accessible file from which users can pull information and see the development of a program at various points in its evolution.
 
@@ -120,9 +115,7 @@ Actually older than HUD, the Federal Housing Administration (FHA) was originally
 
 A key feature in the performance of our model is something called an 'Evolution Index,' or 'EI.'  While a more detailed explanation regarding the EI can be found in our [MVP README](https://github.com/hud-capstone/capstone/blob/master/README_nick.md) file, the EI is a way of finding out how one market is faring against rest of the markets out there.  Prevalent in pharmaceutical product analysis (how well, say, Advair sells in the San Antonio market as compared to every other market in the US), using this metric made sense because we were comparing *actual markets* to each other in order to determine which were going to perform best.
 
-## How Do HUD Projects Get Funded?
-![Image 7-8-20 at 11 35 AM](https://user-images.githubusercontent.com/60628760/86945859-2d7c1c00-c10f-11ea-919f-cd6619860de4.jpeg)
-
+## How Do HUD Projects Get Funded?![Image 7-8-20 at 11 35 AM](https://user-images.githubusercontent.com/60628760/87036251-25c08400-c1b0-11ea-94a9-a2a1d07cc27e.jpeg)
 
 As the largest federal block grant, the 'Home Investment Partnership Program' ('Home Program') is meant for the creation / rehabilitation of affordable housing for low-income individuals.  It is a formulaic grant, meaning the amount of federal money going to the states and cities is based on statistical criteria and the amount of funds to be distributed (source: grants.gov).  There are several of these types of grants, and each has their own unique formula, but the money *must* be allocated and administered per the requirements of the law that gave birth to the grant.
 
@@ -148,7 +141,7 @@ Within our 'wrangle.py' file is a function ('rename_building_permit_columns') us
 
 **___________________________________________________________________________________________________________________________________**
 
-## About the Process ![Image 7-8-20 at 11 40 AM](https://user-images.githubusercontent.com/60628760/86946370-e17da700-c10f-11ea-9e79-ee4a008c97df.jpeg)
+## About the Process ![Image 7-8-20 at 11 40 AM]![Image 7-8-20 at 11 40 AM](https://user-images.githubusercontent.com/60628760/87036036-d24e3600-c1af-11ea-8681-9fd05a181e91.jpeg)
 
 Akin to most projects, 'Region of Boom' followed the standard Data Science pipeline of Project Planning, Data Acquisition, Preparation, Exploration, and Preprocessing, and then moved forward with the Modeling and Delivery of our findings.
 
@@ -276,8 +269,6 @@ As a result of our clustering, the following labels were developed:
 - cluster4 - underperforming markets building a low number of units per building
 - cluster5 - mixed growth markets building a low number of units per building
 
-![Image 7-8-20 at 10 43 AM](https://user-images.githubusercontent.com/60628760/86950387-bb5b0580-c115-11ea-8ed3-e43f5b1923d0.jpeg)
-
 It was from this K-Nearest Neighbors clustering algorithm that we were able to determine the labels for our data: cities with 23-years of consecutive permit documentation regarding five-or-more units per building.  This filtering effort reduced our DataFrame into a more managable size of 2,860 observations across 17 features.  While the features are the columns themselves, the term 'observation' here means 'city, state, and year.'  Details as to why several features were lost after clustering are in the [Final Notebook](https://github.com/hud-capstone/capstone/blob/master/final_notebook.ipynb).
 
 **___________________________________________________________________________________________________________________________________**
@@ -313,6 +304,8 @@ The other is testing: the null hypothesis is the thing we're testing against - t
 Statistical tests (Chi-Square, Binomial, etc.) are run by researchers to see if this null hypothesis is true or not.  In keeping with the legal analogy: Researchers are the prosecution, and we run statistical tests in an effort to build our case against the person (hypothesis) on trial.  The two most impactful statistical tests run in this project were the 'One Sample T-Test' and the 'ANOVA' or 'Analysis of Variance' Test.  
 
 Because of the nature of the Evolution Index, the T-Test was selected to help us gain insight on how well the average growth of our sample market (say, Atlanta) compared to the average growth of all the other major markets in the US.  But because aspects of demographic and economic distribution are unique to each market, the markets themselves are independent of each other - what happens in Atlanta does not determine what happens in Boise, Idaho.  Therefore, an ANOVA test was run to see if there was any statisical significance in market growth amongst all our sample markets.
+
+![Image 7-8-20 at 10 43 AM](https://user-images.githubusercontent.com/60628760/86950387-bb5b0580-c115-11ea-8ed3-e43f5b1923d0.jpeg)
 
 Once the tests had been run, we had to determine whether to accept or reject each null hypothesis.  Deciding what to do revolves around what's known as a probability value, or **p-value** for short.  P-values tell us if the results of our statistical tests were significant or just happened by chance: were we actually on to something, or did we just luck out on a wild guess?  In sports, it would be like putting your money on the underdog to win, and they actually win.  Did all your pre-game analysis work, or did you just get lucky?  A low p-value means all your pre-work was accurate and effective; a high p-value means you just got lucky. 
 
