@@ -1,4 +1,4 @@
-## About 'Region of Boom'
+## About 'Region of Boom'![Image 7-8-20 at 10 48 AM](https://user-images.githubusercontent.com/60628760/86943831-8f875200-c10c-11ea-9b0f-3cc19a272df3.jpeg)
 
 'Region of Boom' is the [Codeup](https://codeup.com/) Data Science capstone project of Alec Hartman, Daniel Guerrero, Noah Melngilis, and Nick Joseph.  As a capstone, it is meant to showcase the cumulative learning that took place in both the Codeup classroom and - due to Covid-19 - instructor-led remote environments.
 
@@ -97,6 +97,8 @@ Though our source data did change, the project objective remained the same: use 
 
 ## Summary Background on Stakeholder, TestFit.io
 
+![Image 7-8-20 at 11 19 AM](https://user-images.githubusercontent.com/60628760/86944174-f99ff700-c10c-11ea-8d42-9b0ec9adf0d1.jpeg)
+
 Based in Dallas, TX and originally named 'BuildingForge,' TestFit.io was founded by Clifton Harness (CEO) and Ryan Griege(CTO) in October of 2015.  They are a software company specifically meant to help architects craft buildings more quickly through their generative design tools that translate over to AutoCAD, a poplular tool used in all phases of the construction process.  Their enhanced visualizations help architects test parametric designs while streamlining the feasibility study process for commercial projects, both substantial roadblocks in any community investment project.
 
 In January 2020, TestFit.io received $2,000,000 from Parkway Venture Capital, which they have earmarked for both personnel and market growth.  They are currently looking to expand their offerings into retail floorplan analysis ('adjacency studies') and hospital construction.  
@@ -119,6 +121,8 @@ Actually older than HUD, the Federal Housing Administration (FHA) was originally
 A key feature in the performance of our model is something called an 'Evolution Index,' or 'EI.'  While a more detailed explanation regarding the EI can be found in our [MVP README](https://github.com/hud-capstone/capstone/blob/master/README_nick.md) file, the EI is a way of finding out how one market is faring against rest of the markets out there.  Prevalent in pharmaceutical product analysis (how well, say, Advair sells in the San Antonio market as compared to every other market in the US), using this metric made sense because we were comparing *actual markets* to each other in order to determine which were going to perform best.
 
 ## How Do HUD Projects Get Funded?
+![Image 7-8-20 at 11 35 AM](https://user-images.githubusercontent.com/60628760/86945859-2d7c1c00-c10f-11ea-919f-cd6619860de4.jpeg)
+
 
 As the largest federal block grant, the 'Home Investment Partnership Program' ('Home Program') is meant for the creation / rehabilitation of affordable housing for low-income individuals.  It is a formulaic grant, meaning the amount of federal money going to the states and cities is based on statistical criteria and the amount of funds to be distributed (source: grants.gov).  There are several of these types of grants, and each has their own unique formula, but the money *must* be allocated and administered per the requirements of the law that gave birth to the grant.
 
@@ -144,7 +148,7 @@ Within our 'wrangle.py' file is a function ('rename_building_permit_columns') us
 
 **___________________________________________________________________________________________________________________________________**
 
-## About the Process
+## About the Process ![Image 7-8-20 at 11 40 AM](https://user-images.githubusercontent.com/60628760/86946370-e17da700-c10f-11ea-9e79-ee4a008c97df.jpeg)
 
 Akin to most projects, 'Region of Boom' followed the standard Data Science pipeline of Project Planning, Data Acquisition, Preparation, Exploration, and Preprocessing, and then moved forward with the Modeling and Delivery of our findings.
 
@@ -160,7 +164,7 @@ Because of this need to 'pretend' the model worked, we scrapped everything and s
 
 Data Science is not a Coen Brothers movie.  It's a Tarantino film where everything is out of sequence until *you* put the story together at the end. 
 
-### A Note About Functions and Pandas Dataframes
+### A Note About Functions and Pandas Dataframes![pandas](https://user-images.githubusercontent.com/60628760/87033731-628a7c00-c1ac-11ea-8871-537873c331f1.jpeg)
 
 Throughout the length of this repository, you will see the term 'function' as it pertains to the Python programming language only (other programming languages like C, PHP, and Javascript allow functions as well, but vary widely in their syntax).  
 
@@ -216,7 +220,7 @@ Thanks to our aforementioned functions, we were able to filter all the original 
 
 **___________________________________________________________________________________________________________________________________**
 
-## Preparing the Data 
+## Preparing the Data ![missing_values-1](https://user-images.githubusercontent.com/60628760/87034884-2526ee00-c1ae-11ea-92e5-924e058d65e0.jpeg)
 
 "Give me six hours to chop down a tree, and I'll spend the first hour sharpening the axe." - *Abe Lincoln*
 
@@ -230,7 +234,7 @@ Since the issue of how or what to impute could be a doctoral thesis (oh, look: [
 
 **___________________________________________________________________________________________________________________________________**
 
-## Splitting and Scaling the Data
+## Splitting and Scaling the Data![unnamed](https://user-images.githubusercontent.com/60628760/87035533-17259d00-c1af-11ea-9058-6106dab1f5a5.jpeg)
 
 To 'split' data simply means to divide the dataset up into two main segments: 'train, and 'test.'  The purpose of this is to train the model against a certain portion of the dataset, and then put that model up against the 'testing' set.  Just like boxing, the training portion is where the data learns to hit a heavy bag, slip under a punch, work its feet around the ring, etc.  The testing portion is when the data actually steps into the ring to spar.  How well it does sparring is a direct reflection of how well it will perfrom in the world of real-time data. 
 
@@ -253,6 +257,7 @@ There are two types of machine learning: supervised and unsupervised.  Supervise
 This project's model is formed from UNSUPERVISED learning - our model will work just fine, but without any inherent labels, we don't know what it's telling us.  Thus, we had to label the data ourselves.  How?  Well that segues nicely into our next topic: clustering.
 
 ### Clustering and the K-Nearest Neighbors Algorithm
+![Image 7-8-20 at 12 18 PM](https://user-images.githubusercontent.com/60628760/86950220-83ec5900-c115-11ea-932a-691df0be41dd.jpeg)
 
 'Clustering' is grouping 'scaled' data according to certain traits shared between the datapoints.  Even though there may be millions of points of data, we have several tools at our disposal that can look at all that data and find out where those commonalities lie.
 
@@ -270,6 +275,8 @@ As a result of our clustering, the following labels were developed:
 - cluster3 - mixed growth markets building a high number of units per building
 - cluster4 - underperforming markets building a low number of units per building
 - cluster5 - mixed growth markets building a low number of units per building
+
+![Image 7-8-20 at 10 43 AM](https://user-images.githubusercontent.com/60628760/86950387-bb5b0580-c115-11ea-8ed3-e43f5b1923d0.jpeg)
 
 It was from this K-Nearest Neighbors clustering algorithm that we were able to determine the labels for our data: cities with 23-years of consecutive permit documentation regarding five-or-more units per building.  This filtering effort reduced our DataFrame into a more managable size of 2,860 observations across 17 features.  While the features are the columns themselves, the term 'observation' here means 'city, state, and year.'  Details as to why several features were lost after clustering are in the [Final Notebook](https://github.com/hud-capstone/capstone/blob/master/final_notebook.ipynb).
 
@@ -291,13 +298,13 @@ So to phrase the aforemention questions more completely:
 
 1.) Do the total number of high-density units (recall: units of five or more) vary based on cluster?
 
-<span style="color:blue">Null Hypothesis: The mean units for all clusters is the same.</span><br/>
-<span style="color:red">Alternate Hypothesis: The mean units for all clusters is different.</span><br/>
+>Null Hypothesis: The mean units for all clusters is the same.</br>
+>Alternate Hypothesis: The mean units for all clusters is different.
 
 2.) What does the evolution index look like for each cluster?
 
-<span style="color:blue">Null Hypothesis: The mean evolution index is the same for all clusters.</span><br/>
-<span style="color:red">Alternate Hypothesis: The mean evolution index is different for all clusters.</span><br/>
+>Null Hypothesis: The mean evolution index is the same for all clusters.</br>
+>Alternate Hypothesis: The mean evolution index is different for all clusters.
 
 You may wonder how these simple hypotheses help guide data exploration.  The first explanation is clarity's sake.  Data exploration can be rather tedious, and keeping simple questions and predictions like these in mind is a good way to interpret the results as they come about.  
 
@@ -310,10 +317,6 @@ Because of the nature of the Evolution Index, the T-Test was selected to help us
 Once the tests had been run, we had to determine whether to accept or reject each null hypothesis.  Deciding what to do revolves around what's known as a probability value, or **p-value** for short.  P-values tell us if the results of our statistical tests were significant or just happened by chance: were we actually on to something, or did we just luck out on a wild guess?  In sports, it would be like putting your money on the underdog to win, and they actually win.  Did all your pre-game analysis work, or did you just get lucky?  A low p-value means all your pre-work was accurate and effective; a high p-value means you just got lucky. 
 
 Now the question is, "How do we know our p-value is low enough to reject our null hypothesis?"  There is a value known as 'alpha' (ususally either .05 and .01) we set at the beginning of testing.  Due to the limitless alternatives to every outcome, there is no 'truth' in Science, and the best researchers can do is make an assumption (the null hypothesis) and try to disprove it.  The 'alpha' is the 'significance level' we want to be correct in our assumption of the null hypothesis - we know there's no absolute truth, so we set a tolerance level at the beginning of testing to account for this.  Our 'alpha' value for this project was .01, which means we will reject our null hypothesis even if the probability of chance (the p-value) is less than 1%.   
-
-**___________________________________________________________________________________________________________________________________**
-
-### Modeling Findings After Exploration
 
 **___________________________________________________________________________________________________________________________________**
 
