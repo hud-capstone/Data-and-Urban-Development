@@ -72,7 +72,7 @@ That being said, we still pushed through with the project and reached an MVP whi
 
 **___________________________________________________________________________________________________________________________________**
 
-## Our New Data: Building Permit Surveys**
+## Our New Data: Building Permit Surveys
 
 Using the United States Census Bureau Building Permit Survey data, we were able to gain more insight and create considerably more value for our stakeholder.  Not only is the data vast, but the Bureau has its own means of imputation - it's own way of filling missing data values - that we could employ while preserving the integrity of the original data.
 
