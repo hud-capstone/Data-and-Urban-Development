@@ -1,4 +1,4 @@
-## About 'Region of Boom'
+## About 'Region of Boom'![Image 7-8-20 at 10 48 AM](https://user-images.githubusercontent.com/60628760/86943831-8f875200-c10c-11ea-9b0f-3cc19a272df3.jpeg)
 
 'Region of Boom' is the [Codeup](https://codeup.com/) Data Science capstone project of Alec Hartman, Daniel Guerrero, Noah Melngilis, and Nick Joseph.  As a capstone, it is meant to showcase the cumulative learning that took place in both the Codeup classroom and - due to Covid-19 - instructor-led remote environments.
 
@@ -30,24 +30,19 @@ Finally, this folder houses our individal notebooks, which were used to create t
 
 Our findings are reproducible for peer review.  To do so, however, requires a few things that must be done beforehand.
 
-![08E64612-4621-4D6E-8131-98A1097F4B8E_4_5005_c](https://user-images.githubusercontent.com/60628760/86941443-8f398780-c109-11ea-977d-7cba2eaf98c0.jpeg)
-
-**1.) Installation of Python and Its Associated Libraries**
+**1.) Python**![08E64612-4621-4D6E-8131-98A1097F4B8E_4_5005_c](https://user-images.githubusercontent.com/60628760/86941443-8f398780-c109-11ea-977d-7cba2eaf98c0.jpeg)
 
 >All work for this project is performed using Python, specifically version 3.7 (or later).  To check which version you have on your computer, simply go to your command line and type ```python --version```.  If it's not installed on your computer, [Python](https://www.python.org) has an easy to follow menu for installation across Mac, Windows, and other various platforms.
 
->Once python is situated on your machine, simply importing its associated libraries (matplotlib, sklearn, and others) into your working environment will allow you to see and manipulate the data in just about every way imaginable. 
+>One of the reasons Python was selected and is gaining popularity in Data Science is its vast wealth of powerful data libraries at the programmer's disposal.  With a simple 'import' statement, one can run highly complex mathematical equations (with 'sklearn') or visualize their findings in great detail (with 'seaborn').
 
 
-![D30762B5-622F-42C1-8D3B-8DB271825156_4_5005_c](https://user-images.githubusercontent.com/60628760/86941546-b001dd00-c109-11ea-822e-1fc3d56e0043.jpeg)
+**2.) Jupyter Notebook**![D30762B5-622F-42C1-8D3B-8DB271825156_4_5005_c](https://user-images.githubusercontent.com/60628760/86941546-b001dd00-c109-11ea-822e-1fc3d56e0043.jpeg)
 
-**2.) Jupyter Notebook**
 
 >Our chosen code devlepment environment for this project is Jupyter Notebook, an open-source web application that allows you to create and share documents.  In it, the user can perform all phases of the Data Science Pipeline, from Data Acquisition through to Modeling and takeaways made.  As with Python, you can check the version on your machine in the command line with ```jupyter notebook```; if it's not found, you can download [Anaconda](https://www.anaconda.com/products/individual) to install their complete line of offerings, of which Jupyter Notebook is one. 
 
-![2302D590-DC57-461E-A045-DFF17CB1F382_4_5005_c](https://user-images.githubusercontent.com/60628760/86941639-c740ca80-c109-11ea-96cb-a06057b70eb3.jpeg)
-
-**3.) Github**
+**3.) Github**![2302D590-DC57-461E-A045-DFF17CB1F382_4_5005_c](https://user-images.githubusercontent.com/60628760/86941639-c740ca80-c109-11ea-96cb-a06057b70eb3.jpeg)
 
 > [GitHub](https://github.com/) is an online version-control platform that provides hosting services for software development.  Each repository is a publicly accessible file from which users can pull information and see the development of a program at various points in its evolution.
 
@@ -77,7 +72,7 @@ That being said, we still pushed through with the project and reached an MVP whi
 
 **___________________________________________________________________________________________________________________________________**
 
-## Our New Data: Building Permit Surveys**
+## Our New Data: Building Permit Surveys
 
 Using the United States Census Bureau Building Permit Survey data, we were able to gain more insight and create considerably more value for our stakeholder.  Not only is the data vast, but the Bureau has its own means of imputation - it's own way of filling missing data values - that we could employ while preserving the integrity of the original data.
 
@@ -96,6 +91,8 @@ Though our source data did change, the project objective remained the same: use 
 **___________________________________________________________________________________________________________________________________**
 
 ## Summary Background on Stakeholder, TestFit.io
+
+![Image 7-8-20 at 11 19 AM](https://user-images.githubusercontent.com/60628760/86944174-f99ff700-c10c-11ea-8d42-9b0ec9adf0d1.jpeg)
 
 Based in Dallas, TX and originally named 'BuildingForge,' TestFit.io was founded by Clifton Harness (CEO) and Ryan Griege(CTO) in October of 2015.  They are a software company specifically meant to help architects craft buildings more quickly through their generative design tools that translate over to AutoCAD, a poplular tool used in all phases of the construction process.  Their enhanced visualizations help architects test parametric designs while streamlining the feasibility study process for commercial projects, both substantial roadblocks in any community investment project.
 
@@ -118,7 +115,7 @@ Actually older than HUD, the Federal Housing Administration (FHA) was originally
 
 A key feature in the performance of our model is something called an 'Evolution Index,' or 'EI.'  While a more detailed explanation regarding the EI can be found in our [MVP README](https://github.com/hud-capstone/capstone/blob/master/README_nick.md) file, the EI is a way of finding out how one market is faring against rest of the markets out there.  Prevalent in pharmaceutical product analysis (how well, say, Advair sells in the San Antonio market as compared to every other market in the US), using this metric made sense because we were comparing *actual markets* to each other in order to determine which were going to perform best.
 
-## How Do HUD Projects Get Funded?
+## How Do HUD Projects Get Funded?![Image 7-8-20 at 11 35 AM](https://user-images.githubusercontent.com/60628760/87036251-25c08400-c1b0-11ea-94a9-a2a1d07cc27e.jpeg)
 
 As the largest federal block grant, the 'Home Investment Partnership Program' ('Home Program') is meant for the creation / rehabilitation of affordable housing for low-income individuals.  It is a formulaic grant, meaning the amount of federal money going to the states and cities is based on statistical criteria and the amount of funds to be distributed (source: grants.gov).  There are several of these types of grants, and each has their own unique formula, but the money *must* be allocated and administered per the requirements of the law that gave birth to the grant.
 
@@ -144,7 +141,7 @@ Within our 'wrangle.py' file is a function ('rename_building_permit_columns') us
 
 **___________________________________________________________________________________________________________________________________**
 
-## About the Process
+## About the Process ![Image 7-8-20 at 11 40 AM]![Image 7-8-20 at 11 40 AM](https://user-images.githubusercontent.com/60628760/87036036-d24e3600-c1af-11ea-8681-9fd05a181e91.jpeg)
 
 Akin to most projects, 'Region of Boom' followed the standard Data Science pipeline of Project Planning, Data Acquisition, Preparation, Exploration, and Preprocessing, and then moved forward with the Modeling and Delivery of our findings.
 
@@ -160,7 +157,7 @@ Because of this need to 'pretend' the model worked, we scrapped everything and s
 
 Data Science is not a Coen Brothers movie.  It's a Tarantino film where everything is out of sequence until *you* put the story together at the end. 
 
-### A Note About Functions and Pandas Dataframes
+### A Note About Functions and Pandas Dataframes![pandas](https://user-images.githubusercontent.com/60628760/87033731-628a7c00-c1ac-11ea-8871-537873c331f1.jpeg)
 
 Throughout the length of this repository, you will see the term 'function' as it pertains to the Python programming language only (other programming languages like C, PHP, and Javascript allow functions as well, but vary widely in their syntax).  
 
@@ -216,7 +213,7 @@ Thanks to our aforementioned functions, we were able to filter all the original 
 
 **___________________________________________________________________________________________________________________________________**
 
-## Preparing the Data 
+## Preparing the Data![close-up-texture-of-a-white-jigsaw-puzzle-in-assembled-state-with-missing-elements-forming-a-blue-pad_t20_WxKR61-570x350](https://user-images.githubusercontent.com/60628760/87037538-fb6fc600-c1b1-11ea-899b-d30b21dcb955.jpeg)
 
 "Give me six hours to chop down a tree, and I'll spend the first hour sharpening the axe." - *Abe Lincoln*
 
@@ -230,7 +227,7 @@ Since the issue of how or what to impute could be a doctoral thesis (oh, look: [
 
 **___________________________________________________________________________________________________________________________________**
 
-## Splitting and Scaling the Data
+## Splitting and Scaling the Data![unnamed](https://user-images.githubusercontent.com/60628760/87035533-17259d00-c1af-11ea-9058-6106dab1f5a5.jpeg)
 
 To 'split' data simply means to divide the dataset up into two main segments: 'train, and 'test.'  The purpose of this is to train the model against a certain portion of the dataset, and then put that model up against the 'testing' set.  Just like boxing, the training portion is where the data learns to hit a heavy bag, slip under a punch, work its feet around the ring, etc.  The testing portion is when the data actually steps into the ring to spar.  How well it does sparring is a direct reflection of how well it will perfrom in the world of real-time data. 
 
@@ -253,6 +250,7 @@ There are two types of machine learning: supervised and unsupervised.  Supervise
 This project's model is formed from UNSUPERVISED learning - our model will work just fine, but without any inherent labels, we don't know what it's telling us.  Thus, we had to label the data ourselves.  How?  Well that segues nicely into our next topic: clustering.
 
 ### Clustering and the K-Nearest Neighbors Algorithm
+![Image 7-8-20 at 12 18 PM](https://user-images.githubusercontent.com/60628760/86950220-83ec5900-c115-11ea-932a-691df0be41dd.jpeg)
 
 'Clustering' is grouping 'scaled' data according to certain traits shared between the datapoints.  Even though there may be millions of points of data, we have several tools at our disposal that can look at all that data and find out where those commonalities lie.
 
@@ -291,13 +289,13 @@ So to phrase the aforemention questions more completely:
 
 1.) Do the total number of high-density units (recall: units of five or more) vary based on cluster?
 
-<span style="color:blue">Null Hypothesis: The mean units for all clusters is the same.</span><br/>
-<span style="color:red">Alternate Hypothesis: The mean units for all clusters is different.</span><br/>
+>Null Hypothesis: The mean units for all clusters is the same.</br>
+>Alternate Hypothesis: The mean units for all clusters is different.
 
 2.) What does the evolution index look like for each cluster?
 
-<span style="color:blue">Null Hypothesis: The mean evolution index is the same for all clusters.</span><br/>
-<span style="color:red">Alternate Hypothesis: The mean evolution index is different for all clusters.</span><br/>
+>Null Hypothesis: The mean evolution index is the same for all clusters.</br>
+>Alternate Hypothesis: The mean evolution index is different for all clusters.
 
 You may wonder how these simple hypotheses help guide data exploration.  The first explanation is clarity's sake.  Data exploration can be rather tedious, and keeping simple questions and predictions like these in mind is a good way to interpret the results as they come about.  
 
@@ -307,13 +305,11 @@ Statistical tests (Chi-Square, Binomial, etc.) are run by researchers to see if 
 
 Because of the nature of the Evolution Index, the T-Test was selected to help us gain insight on how well the average growth of our sample market (say, Atlanta) compared to the average growth of all the other major markets in the US.  But because aspects of demographic and economic distribution are unique to each market, the markets themselves are independent of each other - what happens in Atlanta does not determine what happens in Boise, Idaho.  Therefore, an ANOVA test was run to see if there was any statisical significance in market growth amongst all our sample markets.
 
+![Image 7-8-20 at 10 43 AM](https://user-images.githubusercontent.com/60628760/86950387-bb5b0580-c115-11ea-8ed3-e43f5b1923d0.jpeg)
+
 Once the tests had been run, we had to determine whether to accept or reject each null hypothesis.  Deciding what to do revolves around what's known as a probability value, or **p-value** for short.  P-values tell us if the results of our statistical tests were significant or just happened by chance: were we actually on to something, or did we just luck out on a wild guess?  In sports, it would be like putting your money on the underdog to win, and they actually win.  Did all your pre-game analysis work, or did you just get lucky?  A low p-value means all your pre-work was accurate and effective; a high p-value means you just got lucky. 
 
 Now the question is, "How do we know our p-value is low enough to reject our null hypothesis?"  There is a value known as 'alpha' (ususally either .05 and .01) we set at the beginning of testing.  Due to the limitless alternatives to every outcome, there is no 'truth' in Science, and the best researchers can do is make an assumption (the null hypothesis) and try to disprove it.  The 'alpha' is the 'significance level' we want to be correct in our assumption of the null hypothesis - we know there's no absolute truth, so we set a tolerance level at the beginning of testing to account for this.  Our 'alpha' value for this project was .01, which means we will reject our null hypothesis even if the probability of chance (the p-value) is less than 1%.   
-
-**___________________________________________________________________________________________________________________________________**
-
-### Modeling Findings After Exploration
 
 **___________________________________________________________________________________________________________________________________**
 
